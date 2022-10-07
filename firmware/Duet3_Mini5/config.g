@@ -35,8 +35,8 @@ M208 X0 Y0 Z0 S1                         ; set axis minima
 M208 X142 Y145 Z142 S0                   ; set axis maxima
 
 ; Endstops
-M574 X1 S1 P"io2.in"                     ; configure switch-type (e.g. microswitch) endstop for low end on X via pin io2.in
-M574 Y1 S1 P"io3.in"                     ; configure switch-type (e.g. microswitch) endstop for low end on Y via pin io3.in
+M574 X1 S1 P"io5.in"                     ; configure switch-type (e.g. microswitch) endstop for low end on X via pin io5.in
+M574 Y1 S1 P"io6.in"                     ; configure switch-type (e.g. microswitch) endstop for low end on Y via pin io6.in
 
 ; Z-Probe
 M558 P0 H5 F120 T6000                    ; disable Z probe but set dive height, probe speed and travel speed
