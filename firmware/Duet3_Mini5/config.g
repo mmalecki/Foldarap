@@ -16,8 +16,8 @@ M586 P1 S0                               ; disable FTP
 M586 P2 S0                               ; disable Telnet
 
 ; Drives
-M569 P0 S1                               ; physical drive 0 goes forwards X
-M569 P1 S1                               ; physical drive 1 goes forwards Y
+M569 P0 S0                               ; physical drive 0 goes backwards X
+M569 P1 S0                               ; physical drive 1 goes backwards Y
 M569 P2 S1                               ; physical drive 2 goes backwards Z-left
 M569 P3 S0                               ; physical drive 3 goes backwards Z-right
 M569 P4 S0                               ; physical drive 3 goes backwards E
