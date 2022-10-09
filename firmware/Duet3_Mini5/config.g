@@ -43,7 +43,8 @@ M558 P0 H5 F120 T6000                    ; disable Z probe but set dive height, 
 M557 X20:120 Y20:120 S20                 ; define mesh grid
 
 ; Heaters
-M140 H-1                                 ; disable heated bed (overrides default heater mapping)
+M308 S0 P"bedtemp" Y"thermistor" T100000 B3950 ; configure sensor 0 as thermistor on pin bedtemp
+M140 H-1                                       ; disable heated bed (overrides default heater mapping)
 
 ; Fans
 
