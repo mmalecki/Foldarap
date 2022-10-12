@@ -43,12 +43,28 @@ M558 P0 H5 F120 T6000                    ; disable Z probe but set dive height, 
 M557 X20:120 Y20:120 S20                 ; define mesh grid
 
 ; Heaters
-M308 S0 P"bedtemp" Y"thermistor" T100000 B3950 ; configure sensor 0 as thermistor on pin bedtemp
-M140 H-1                                       ; disable heated bed (overrides default heater mapping)
+M308 S0 P"temp0" Y"thermistor" T100000 B3950   ; the bed thermistor as sensor 0
+M950 H0 C"out0" T0
+M307 H0 B0 S1.00
+M140 H0
+M143 H0 S120
+
+M308 S1 P"temp1" Y"thermistor" T100000 B4725 C7.06e-8 ; the hot-end thermistor as sensor 1
+M950 H1 C"out1" T1                                   ; create a hot-end heater on out1
+M307 H1 B0 S1.00                                     ; disable bang-bang mode for heater  and set PWM limit
+M143 H1 S280                                         ; set temperature limit for heater 1 to 280C
 
 ; Fans
+M950 F0 C"out5" Q100 ; the print fan
+M106 P0 S0 H-1
+
+M950 F1 C"out6" Q100 ; the hot-end fan
+M106 P1 S0 H1 T45    ; thermostatic control for the hot-end fan, using sensor 1
 
 ; Tools
+M563 P0 D0 H1 F1                                      ; define tool 0
+G10 P0 X0 Y0 Z0                                       ; set tool 0 axis offsets
+G10 P0 R0 S0
 
 ; Custom settings are not defined
 
