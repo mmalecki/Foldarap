@@ -62,9 +62,10 @@ M950 F1 C"out6" Q100 ; the hot-end fan
 M106 P1 S0 H1 T45    ; thermostatic control for the hot-end fan, using sensor 1
 
 ; Tools
-M563 P0 D0 H1 F1                                      ; define tool 0
+M563 P0 D0 H1 F0                                      ; define tool 0
 G10 P0 X0 Y0 Z0                                       ; set tool 0 axis offsets
 G10 P0 R0 S0
+T0
 
 ; Custom settings are not defined
 
