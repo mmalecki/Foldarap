@@ -68,4 +68,4 @@ G10 P0 R0 S0
 T0
 
 ; Custom settings are not defined
-
+M501         ; load config-override.g
