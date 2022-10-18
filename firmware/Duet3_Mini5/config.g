@@ -39,8 +39,11 @@ M574 X1 S1 P"io5.in"                     ; configure switch-type (e.g. microswit
 M574 Y1 S1 P"io6.in"                     ; configure switch-type (e.g. microswitch) endstop for low end on Y via pin io6.in
 
 ; Z-Probe
-M558 P0 H5 F120 T6000                    ; disable Z probe but set dive height, probe speed and travel speed
-M557 X20:120 Y20:120 S20                 ; define mesh grid
+M950 S0 C"io1.out"
+M558 P9 C"io1.in" H5 F120 T6000
+G31 X-17.244 Y-20.75 Z3.3 P25
+
+M557 X20:120 Y30:120 S20
 
 ; Heaters
 M308 S0 P"temp0" Y"thermistor" T100000 B3950   ; the bed thermistor as sensor 0
