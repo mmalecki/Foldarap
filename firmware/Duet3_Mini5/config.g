@@ -44,6 +44,7 @@ M558 P9 C"io1.in" H5 F120 T6000
 G31 X-17.244 Y-20.75 Z3.3 P25
 
 M557 X20:120 Y30:120 S20
+M376 H2
 
 ; Heaters
 M308 S0 P"temp0" Y"thermistor" T100000 B3950   ; the bed thermistor as sensor 0
