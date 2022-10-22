@@ -4,7 +4,6 @@ use <../catchnhole/catchnhole.scad>;
 include <../parameters.scad>;
 
 pen_max_d = 16.5;
-standoff_d = 7;
 h = 16;
 carriage_bolts_top_offset = 5;
 
@@ -14,7 +13,7 @@ pen_bolts_z = h - 2 * carriage_bolts_top_offset;
 pen_bolt = x_carriage_bolt;
 
 t = 2.4;
-w = x_carriage_bolt_s + 2 * standoff_d;
+w = x_carriage_bolt_s + 2 * bolt_wall_d;
 l = pen_max_d + 2 * t + nut_height(pen_bolt);
 
 module carriage_mounts () {

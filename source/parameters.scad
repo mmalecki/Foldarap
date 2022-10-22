@@ -1,6 +1,7 @@
 $fn = 200;
 
 include <parameters-design-rules.scad>;
+include <parameters-v-slot.scad>;
 
 x_carriage_bolt = "M3";
 x_carriage_bolt_s = 25;
@@ -16,3 +17,7 @@ v6_hotend_mount_w = 35;
 v6_hotend_mount_h = 12;
 v6_hotend_mount_l = 11.5;
 
+x_v_slot_l = 200;
+// Measured on the outer hinge component in CAD, very important to keep consistent,
+// otherwise you skew the Z extrusions one way or the other.
+z_x_frame_offset = 7;
