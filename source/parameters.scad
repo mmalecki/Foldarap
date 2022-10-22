@@ -1,6 +1,7 @@
 $fn = 200;
 
 include <parameters-design-rules.scad>;
+include <parameters-nema17.scad>;
 include <parameters-v-slot.scad>;
 
 x_carriage_bolt = "M3";

@@ -2,12 +2,18 @@ press_fit = 0;
 v_slot_sliding_fit = 0.021; // H7/h6 over a 20 mm "shaft"
 tight_fit = 0.1;
 fit = 0.2;
+loose_fit = 0.5;
 
 // Thickness of a wall holding onto aluminium extrusion.
 v_slot_wall_t = 4;
 // And a length of the bolt going through said wall, and into a t-nut
 // in the extrusion.
 v_slot_wall_t_bolt_l = 8;
+
+// Thickness of a wall holding a stepper.
+stepper_mount_plate_t = 4;
+// How much of a bolt should go into a stepper at minimum.
+stepper_bolt_l = 4;
 
 bolt = "M3";
 // Minimal amount of material around a bolt hole for our standard bolt (M3):
