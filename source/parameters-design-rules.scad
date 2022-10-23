@@ -10,8 +10,11 @@ v_slot_wall_t = 4;
 // in the extrusion.
 v_slot_wall_t_bolt_l = 8;
 
+// Thickness of a wall holding onto a belt.
+belt_wall_t = 2;
+
 // Thickness of a wall holding a stepper.
-stepper_mount_plate_t = 4;
+stepper_mount_plate_t = 5;
 // How much of a bolt should go into a stepper at minimum.
 stepper_bolt_l = 4;
 
@@ -20,6 +23,8 @@ bolt = "M3";
 bolt_wall_d = 7;
 // Minimal height of a bolt hole for our standard bolt (M3):
 bolt_wall_h = 3;
+// Minimal amount of material around a nut for our standard bolt (M3):
+nut_wall_d = 9;
 
 // The bolt size we're going to use to put the frame together:
 frame_bolt = "M4";

@@ -1,20 +1,15 @@
 use <v-slot.scad>;
+use <top-corner.scad>;
+use <gt2.scad>;
+use <catchnhole/catchnhole.scad>;
 include <parameters.scad>;
-include <parameters.scad>;
+include <parameters-gt2.scad>;
+include <parameters-mgn12.scad>;
 
-h = 10;
+mgn = false;
+
+h = max(2 * gt2_pitch * gt2_clamp_min_teeth + 2 * belt_wall_t, mgn ? mgn12_carriage_l : 0);
 module z_gantry_left () {
-  slider_d = v_slot_d + 2 * v_slot_wall_t;
-  linear_extrude (h) {
-    difference () {
-      translate([-slider_d / 2, -slider_d / 2])
-        square([slider_d, slider_d]);
-
-      v_slot_2d_clearance(loose_fit);
-    }
-
-    v_slot_2d_slider();
-  }
 }
 
 z_gantry_left();

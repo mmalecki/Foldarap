@@ -8,7 +8,7 @@ module nema17_mount_plate () {
 
 module nema17_mount_plate_2d () {
   difference () {
-    translate([-nema17_d / 2, -nema17_d / 2])
+     translate([-nema17_d / 2, -nema17_d / 2])
       square([nema17_d, nema17_d]);
 
     circle(d = nema17_shaft_plate_fit_d);

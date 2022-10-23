@@ -10,7 +10,7 @@ top_hold_w = 13;
 
 // We want to move the stepper close to the extrusion (forward in Y axis)
 // to save space. Calculate how close.
-z_stepper_y_inset = (nema17_d - nema17_shaft_plate_fit_d) / 2;
+z_stepper_y_inset = (nema17_d - nema17_shaft_plate_fit_d) / 4;
 z_stepper_bolt_l = stepper_bolt_l + stepper_mount_plate_t;
 
 module side_bolt_pair () {
@@ -55,7 +55,20 @@ module top_corner () {
     }
   }
 
-  translate([-v_slot_d / 2, 0, h - nema17_d / 2]) {
+  stepper_x_offset = -v_slot_d / 2 - (v_slot_wall_t - stepper_mount_plate_t);
+  // Add a support to the stepper mount plate to increase rigidity.
+  translate([stepper_x_offset, -v_slot_d / 2 - v_slot_wall_t, h - stepper_mount_plate_t]) {
+    linear_extrude(stepper_mount_plate_t) {
+      polygon([
+        [0, 0],
+        [0, -nema17_d / 2],
+        [nema17_d / 2, 0]
+      ]);
+    }
+  }
+
+  // And finally hold the stepper.
+  translate([stepper_x_offset, 0, h - nema17_d / 2]) {
     to_z_belt_y_center() {
       rotate([-90, 0, 90]) {
         difference () {
@@ -72,9 +85,8 @@ module top_corner () {
             }
 
             translate([nema17_bolt_s / 2, nema17_bolt_s / 2]) {
-              // This bolt needs to be countersunk to clear the Z extrusion.
               rotate([180, 0, 0])
-                bolt(bolt, length = z_stepper_bolt_l, kind = "countersunk");
+                bolt(bolt, length = z_stepper_bolt_l);
             }
           }
         }
@@ -83,9 +95,11 @@ module top_corner () {
   }
 }
 
+function z_belt_z_v_slot_y_offset () = -v_slot_d / 2 - v_slot_wall_t - nema17_d / 2 + z_stepper_y_inset;
+
 // Translates from the center of the Z extrusion to Y of the center of the belt path.
 module to_z_belt_y_center () {
-  translate([0, -v_slot_d / 2 - v_slot_wall_t - nema17_d / 2 + z_stepper_y_inset]) children();
+  translate([0, z_belt_z_v_slot_y_offset()]) children();
 }
 
 top_corner();
