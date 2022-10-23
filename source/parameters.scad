@@ -19,6 +19,9 @@ v6_hotend_mount_h = 12;
 v6_hotend_mount_l = 11.5;
 
 x_v_slot_l = 200;
+y_v_slot_l = 300;
+z_v_slot_l = 300;
+
 // Measured on the outer hinge component in CAD, very important to keep consistent,
 // otherwise you skew the Z extrusions one way or the other.
 z_x_frame_offset = 7;
