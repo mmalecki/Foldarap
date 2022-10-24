@@ -64,7 +64,9 @@ module z_gantry_right () {
         polygon([
           [0, h],
           [x_hold_w, h],
-          [0, v_slot_hold_offset],
+          [x_hold_w, h - v_slot_wall_t],
+          // Only hold on to a little bit from the sides:
+          [0, v_slot_hold_offset + v_slot_d * 3 / 4],
         ]);
       }
     }
