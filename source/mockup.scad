@@ -31,7 +31,7 @@ module belt_mockup (length) {
 
 // The right gantry (when looking from the front).
 translate([-x_v_slot_l / 2 - z_x_frame_offset - v_slot_d / 2, 0]) {
-  color("silver") v_slot(z_v_slot_l);
+  v_slot_mockup(z_v_slot_l);
 
   translate([0, 0, z_v_slot_l / 2])
     z_gantry_right();
@@ -44,7 +44,7 @@ translate([-x_v_slot_l / 2 - z_x_frame_offset - v_slot_d / 2, 0]) {
 // The left gantry (when looking from the front).
 // Carries the extruder at the moment.
 translate([x_v_slot_l / 2 + z_x_frame_offset + v_slot_d / 2, 0]) {
-  color("silver") v_slot(z_v_slot_l);
+   v_slot_mockup(z_v_slot_l);
 
   translate([0, 0, z_v_slot_l / 2])
     z_gantry_left();
@@ -54,4 +54,4 @@ translate([x_v_slot_l / 2 + z_x_frame_offset + v_slot_d / 2, 0]) {
   to_z_belt_y_center () belt_mockup(z_v_slot_l);
 }
 
-translate([-x_v_slot_l / 2, 0, z_v_slot_l / 2 + v_slot_d / 2]) rotate([0, 90, 0]) v_slot_mockup(x_v_slot_l);
+translate([-x_v_slot_l / 2, 0, z_v_slot_l / 2 + v_slot_d / 2 + v_slot_wall_t]) rotate([0, 90, 0]) v_slot_mockup(x_v_slot_l);
