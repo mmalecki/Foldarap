@@ -25,3 +25,5 @@ z_v_slot_l = 300;
 // Measured on the outer hinge component in CAD, very important to keep consistent,
 // otherwise you skew the Z extrusions one way or the other.
 z_x_frame_offset = 7;
+
+frame_v_slot_z_spacing = 80;
