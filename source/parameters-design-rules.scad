@@ -1,3 +1,5 @@
+use <catchnhole/catchnhole.scad>;
+
 press_fit = 0;
 v_slot_sliding_fit = 0.021; // H7/h6 over a 20 mm "shaft"
 tight_fit = 0.1;
@@ -25,6 +27,7 @@ bolt_wall_d = 7;
 bolt_wall_h = 3;
 // Minimal amount of material around a nut for our standard bolt (M3):
 nut_wall_d = 9;
+nut_wall_h = nut_height(bolt) + bolt_wall_h;
 
 // The bolt size we're going to use to put the frame together:
 frame_bolt = "M4";
