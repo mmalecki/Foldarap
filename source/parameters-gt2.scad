@@ -12,3 +12,6 @@ gt2_pld = 0.254;
 // They also say there should be fasteners around the belt clamping fixture, but
 // we're going to pretend we didn't see that.
 gt2_clamp_min_teeth = 6;
+
+gt2_20t_idler_d = 18;
+gt2_20t_idler_h = 9;
