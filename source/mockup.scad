@@ -53,7 +53,7 @@ translate([x_v_slot_l / 2 + z_x_frame_offset + v_slot_d / 2, 0]) {
    v_slot_mockup(z_v_slot_l);
 
   translate([0, 0, z_v_slot_l / 2])
-    z_gantry_left();
+    mirror([1, 0, 0]) z_gantry_left();
   translate([0, 0, z_v_slot_l])
     mirror([1, 0, 0]) top_corner();
 
