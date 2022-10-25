@@ -24,7 +24,7 @@ module v_slot_2d_clearance (fit = 0) {
   hull () v_slot_2d(fit);
 }
 
-slider_w = 0.7 * (v_slot_d - v_slot_channel_outer_w) / 2;
+slider_w = (v_slot_d - v_slot_slot_outer_w) / 2;
 // Add a taper to lessen ringing (maybe?).
 slider_taper_w = 0.1 * slider_w;
 module v_slot_2d_slider() {
@@ -45,4 +45,16 @@ module v_slot_2d_slider() {
       }
     }
   }
+}
+
+module v_slot_2d_conduit (fit = 0, t = v_slot_wall_t) {
+  channel_d = v_slot_d + v_slot_wall_t * 2;
+  difference () {
+    square([channel_d, channel_d], center = true);
+    v_slot_2d_clearance();
+  }
+}
+
+module v_slot_conduit (h, fit = 0, t = v_slot_wall_t) {
+  linear_extrude (h) v_slot_2d_conduit(fit, t);
 }

@@ -10,7 +10,7 @@ module z_idler () {
   d = v_slot_d + 2 * v_slot_wall_t;
 
   difference () {
-    v_slot_channel(h, fit = tight_fit);
+    v_slot_conduit(h, fit = tight_fit);
 
     translate([0, 0, h / 2]) {
       translate([-v_slot_d / 2, 0])
@@ -36,7 +36,7 @@ module z_idler () {
       translate([0, 0, h / 2]) {
         rotate([0, 90, 0])
           to_z_belt_y_center() {
-            cylinder(d = bolt_wall_d, h = idler_mount_w, center = true);
+            cylinder(d1 = nut_wall_d, d2 = bolt_wall_d, h = idler_mount_w, center = true);
           }
       }
     }
