@@ -16,6 +16,8 @@ use <top-corner.scad>;
 use <z-gantry-left.scad>;
 use <z-gantry-right.scad>;
 use <v-slot.scad>;
+use <hinge-outer.scad>;
+use <z-idler.scad>;
 
 module v_slot_mockup (length) {
   color("silver") v_slot(length);
@@ -38,6 +40,10 @@ translate([-x_v_slot_l / 2 - z_x_frame_offset - v_slot_d / 2, 0]) {
   translate([0, 0, z_v_slot_l])
     top_corner();
 
+  mirror([1, 0, 0]) translate([-z_x_frame_offset - v_slot_d / 2, 0]) outer_hinge();
+
+  translate([0, 0, frame_v_slot_z_spacing]) z_idler();
+
   to_z_belt_y_center () belt_mockup(z_v_slot_l);
 }
 
@@ -50,6 +56,8 @@ translate([x_v_slot_l / 2 + z_x_frame_offset + v_slot_d / 2, 0]) {
     z_gantry_left();
   translate([0, 0, z_v_slot_l])
     mirror([1, 0, 0]) top_corner();
+
+  translate([-z_x_frame_offset - v_slot_d / 2, 0]) outer_hinge();
 
   to_z_belt_y_center () belt_mockup(z_v_slot_l);
 }
