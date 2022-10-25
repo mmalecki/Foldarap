@@ -75,7 +75,13 @@ module z_gantry_right () {
       rotate([0, 90, 0]) 
         v_slot_clearance(x_v_slot_l, fit = tight_fit);
 
-        translate([x_hold_w / 2, 0, v_slot_d / 2]) bolt(frame_bolt, length = v_slot_wall_t);
+      translate([0, 0, v_slot_d / 2]) {
+        hull () {
+          for (spot = [x_hold_w / 2, x_hold_w])
+            translate([spot, 0])
+              bolt(frame_bolt, length = v_slot_wall_t);
+        }
+      }
     }
 
   }
