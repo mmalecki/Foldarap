@@ -1,11 +1,11 @@
-use <v-slot.scad>;
+use <vitamins/v-slot.scad>;
 use <top-corner.scad>;
-use <gt2.scad>;
+use <vitamins/gt2.scad>;
 use <z-gantry.scad>;
 use <catchnhole/catchnhole.scad>;
 include <parameters.scad>;
-include <parameters-gt2.scad>;
-include <parameters-mgn12.scad>;
+include <vitamins/gt2-parameters.scad>;
+include <vitamins/mgn12-parameters.scad>;
 
 module z_gantry_right () {
   z_gantry_common();

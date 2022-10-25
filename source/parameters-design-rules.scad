@@ -27,7 +27,7 @@ bolt_wall_d = 7;
 bolt_wall_h = 3;
 // Minimal amount of material around a nut for our standard bolt (M3):
 nut_wall_d = 9;
-nut_wall_h = nut_height(bolt) + bolt_wall_h;
+nut_wall_h = nut_height(bolt) + 2/3 * bolt_wall_h;
 
 // The bolt size we're going to use to put the frame together:
 frame_bolt = "M4";

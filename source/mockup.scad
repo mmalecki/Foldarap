@@ -11,11 +11,11 @@ belt_centers = 2;
 belts = 3;
 
 include <parameters.scad>;
-include <parameters-gt2.scad>;
+include <vitamins/gt2-parameters.scad>;
 use <top-corner.scad>;
 use <z-gantry-left.scad>;
 use <z-gantry-right.scad>;
-use <v-slot.scad>;
+use <vitamins/v-slot.scad>;
 use <hinge-outer.scad>;
 use <z-idler.scad>;
 

@@ -1,5 +1,5 @@
-include <parameters-v-slot.scad>;
-include <parameters-design-rules.scad>;
+include <v-slot-parameters.scad>;
+include <../parameters-design-rules.scad>;
 
 module v_slot_2d (fit = 0) {
   d_fit = v_slot_d + fit;

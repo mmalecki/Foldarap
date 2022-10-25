@@ -1,4 +1,4 @@
-include <parameters-design-rules.scad>;
+include <../parameters-design-rules.scad>;
 
 nema17_d = 42.3;
 nema17_bolt_s = 31;

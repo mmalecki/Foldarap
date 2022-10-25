@@ -1,6 +1,6 @@
-use <catchnhole/catchnhole.scad>;
-include <parameters-design-rules.scad>;
-include <parameters-nema17.scad>;
+use <../catchnhole/catchnhole.scad>;
+include <../parameters-design-rules.scad>;
+include <nema17-parameters.scad>;
 
 module nema17_mount_plate () {
   linear_extrude (stepper_mount_plate_t) nema17_mount_plate_2d();

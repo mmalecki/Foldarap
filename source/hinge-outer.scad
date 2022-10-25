@@ -1,5 +1,5 @@
 use <catchnhole/catchnhole.scad>;
-use <v-slot.scad>;
+use <vitamins/v-slot.scad>;
 include <parameters.scad>;
 
 plunger_wall_t = 3;

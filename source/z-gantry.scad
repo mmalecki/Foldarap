@@ -1,10 +1,10 @@
 use <top-corner.scad>;
-use <gt2.scad>;
-use <v-slot.scad>;
+use <vitamins/gt2.scad>;
+use <vitamins/v-slot.scad>;
 use <catchnhole/catchnhole.scad>;
 include <parameters.scad>;
-include <parameters-gt2.scad>;
-include <parameters-mgn12.scad>;
+include <vitamins/gt2-parameters.scad>;
+include <vitamins/mgn12-parameters.scad>;
 
 mgn = false;
 
@@ -40,6 +40,7 @@ module z_gantry_common () {
     to_z_belt_y_center () {
       translate([0, gt2_16t_pulley_pitch_d / 2]) {
         translate([(belt_holder_w - clamp_w) / 2, 0, h])
+          rotate([-15, 0, 0])
             rotate([0, 90, 180])
               gt2_clearance(gt2_clamp_min_teeth, width = clamp_w);
 

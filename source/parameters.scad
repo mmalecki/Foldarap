@@ -1,9 +1,9 @@
 $fn = 200;
 
 include <parameters-design-rules.scad>;
-include <parameters-nema17.scad>;
-include <parameters-v-slot.scad>;
-include <parameters-gt2.scad>;
+include <vitamins/nema17-parameters.scad>;
+include <vitamins/v-slot-parameters.scad>;
+include <vitamins/gt2-parameters.scad>;
 
 x_carriage_bolt = "M3";
 x_carriage_bolt_s = 25;

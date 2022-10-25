@@ -1,6 +1,6 @@
 use <catchnhole/catchnhole.scad>;
-use <v-slot.scad>;
-use <nema17.scad>;
+use <vitamins/v-slot.scad>;
+use <vitamins/nema17.scad>;
 include <parameters.scad>;
 // How much of the Z extrusion we want to hold at the top corner. Measured in CAD.
 z_hold_h = 20;

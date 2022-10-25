@@ -1,6 +1,6 @@
 include <parameters.scad>;
 use <catchnhole/catchnhole.scad>;
-use <v-slot.scad>;
+use <vitamins/v-slot.scad>;
 use <top-corner.scad>;
 
 h = 20;

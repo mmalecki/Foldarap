@@ -1,6 +1,6 @@
-use <catchnhole/catchnhole.scad>;
-include <parameters-design-rules.scad>;
-include <parameters-gt2.scad>;
+use <../catchnhole/catchnhole.scad>;
+include <../parameters-design-rules.scad>;
+include <gt2-parameters.scad>;
 
 module gt2_2d_tooth_clearance (fit = tight_fit) {
   tooth_base_to_back = gt2_t - gt2_tooth_h;
