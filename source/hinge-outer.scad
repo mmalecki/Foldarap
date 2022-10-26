@@ -126,7 +126,7 @@ module outer_hinge () {
 
 module plunger_clearance (fit = 0) {
   cylinder(d = kipp0334_210_d + fit, h = kipp0334_210_l);
-  translate([0, 0, kipp0334_210_l - kipp0334_210_flange_l + fit])
+  translate([0, 0, kipp0334_210_l - kipp0334_210_flange_l + max(tight_fit, fit)])
     cylinder(d = kipp0334_210_flange_d + fit, h = kipp0334_210_flange_l);
 
   // Access hole for the plungers, on the off chance you need to push them out.
