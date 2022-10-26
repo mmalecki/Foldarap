@@ -4,7 +4,7 @@ use <vitamins/gt2.scad>;
 function gt2_tensioner_clamp_size (teeth, width = gt2_w, tension_clearance = 0) = [
   width + belt_wall_t,
   gt2_t + nut_wall_d + belt_wall_t,
-  gt2_pitch * gt2_clamp_min_teeth + belt_wall_t + tension_clearance
+  gt2_pitch * teeth + belt_wall_t + tension_clearance
 ];
 
 module to_gt2_tensioner_clamp_bolt () {
