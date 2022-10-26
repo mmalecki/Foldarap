@@ -25,7 +25,7 @@ module z_idler () {
 
   idler_d_fit = gt2_16t_idler_d + loose_fit;
   idler_h_fit = gt2_16t_idler_h + loose_fit;
-  idler_total_l = abs(z_belt_z_v_slot_y_offset()) - v_slot_d / 2 - v_slot_wall_t + bolt_wall_d;
+  idler_total_l = abs(z_belt_z_v_slot_y_offset()) - v_slot_d / 2 - v_slot_wall_t + nut_wall_d;
   idler_mount_w = idler_h_fit + bolt_wall_h + nut_wall_h;
 
   difference () {
