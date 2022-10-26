@@ -7,9 +7,6 @@ e = 10;
 // With what diameter to show belt centers (0 to disable).
 belt_centers = 2;
 
-// With what diameter to show belts (0 to disable).
-belts = 3;
-
 include <parameters.scad>;
 include <vitamins/gt2-parameters.scad>;
 use <top-corner.scad>;
@@ -26,7 +23,7 @@ module v_slot_mockup (length) {
 module belt_mockup (length) {
   for (side = [-1, 1]) {
     translate([0, side * gt2_16t_pulley_pitch_d / 2])
-      color("black") cylinder(d = belts, h = length);
+      color("black") cylinder(d = gt2_t, h = length);
   }
   color("gray") cylinder(d = belt_centers, h = length);
 }
