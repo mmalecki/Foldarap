@@ -1,20 +1,22 @@
 // Whether to show the exploded view or not.
 explode = true;
 
+slack = 0.1;
+
 // How much to explode the view.
 e = 10;
 
 // With what diameter to show belt centers (0 to disable).
 belt_centers = 2;
 
-include <parameters.scad>;
-include <vitamins/gt2-parameters.scad>;
-use <top-corner.scad>;
-use <z-gantry-left.scad>;
-use <z-gantry-right.scad>;
-use <vitamins/v-slot.scad>;
-use <hinge-outer.scad>;
-use <z-idler.scad>;
+include <../parameters.scad>;
+include <../vitamins/gt2-parameters.scad>;
+use <../top-corner.scad>;
+use <../z-gantry-left.scad>;
+use <../z-gantry-right.scad>;
+use <../vitamins/v-slot.scad>;
+use <../hinge-outer.scad>;
+use <../z-idler.scad>;
 
 module v_slot_mockup (length) {
   color("silver") v_slot(length);
@@ -37,9 +39,11 @@ translate([-x_v_slot_l / 2 - z_x_frame_offset - v_slot_d / 2, 0]) {
   translate([0, 0, z_v_slot_l])
     top_corner();
 
-  mirror([1, 0, 0]) translate([-z_x_frame_offset - v_slot_d / 2, 0]) outer_hinge();
+  mirror([1, 0, 0])
+    translate([-z_x_frame_offset - v_slot_d / 2, 0, frame_v_slot_z_spacing / 2])
+      outer_hinge();
 
-  translate([0, 0, frame_v_slot_z_spacing]) z_idler();
+  translate([0, 0, frame_v_slot_z_spacing + slack]) z_idler();
 
   to_z_belt_y_center () belt_mockup(z_v_slot_l);
 }
@@ -54,7 +58,11 @@ translate([x_v_slot_l / 2 + z_x_frame_offset + v_slot_d / 2, 0]) {
   translate([0, 0, z_v_slot_l])
     mirror([1, 0, 0]) top_corner();
 
-  translate([-z_x_frame_offset - v_slot_d / 2, 0]) outer_hinge();
+  translate([-z_x_frame_offset - v_slot_d / 2, 0, frame_v_slot_z_spacing / 2])
+    outer_hinge();
+
+  mirror([1, 0, 0])
+    translate([0, 0, frame_v_slot_z_spacing + slack]) z_idler();
 
   to_z_belt_y_center () belt_mockup(z_v_slot_l);
 }
