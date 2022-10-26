@@ -1,4 +1,5 @@
 use <top-corner.scad>;
+use <gt2-tensioner-clamp.scad>
 use <vitamins/gt2.scad>;
 use <vitamins/v-slot.scad>;
 use <catchnhole/catchnhole.scad>;
@@ -8,14 +9,36 @@ include <vitamins/mgn12-parameters.scad>;
 
 mgn = false;
 
-h = max(2 * gt2_pitch * gt2_clamp_min_teeth + 2 * belt_wall_t, mgn ? mgn12_carriage_l : 0);
+clamp_rot = 12.5;
+clamp_teeth = gt2_clamp_min_teeth + 1;
+clamp_idle = 1;
+clamp_idle_l = clamp_idle * gt2_pitch;
+
+clamp_l = gt2_pitch * clamp_teeth;
+
+tensioner_clamp_teeth = gt2_clamp_min_teeth;
+
+tensioner_size = gt2_tensioner_clamp_size(tensioner_clamp_teeth);
+h = max(
+
+  (cos(clamp_rot) * clamp_l) +
+  (cos(clamp_rot) * clamp_idle_l) +
+  tensioner_size[2] +
+  belt_wall_t,
+
+  mgn ? mgn12_carriage_l : 0
+);
+
 
 x_hold_w = z_x_frame_offset + frame_bolt_wall_d;
 
 module z_gantry_common () {
   slider_d = v_slot_d + 2 * v_slot_wall_t;
   belt_holder_w = gt2_w + 2 * belt_wall_t + fit;
-  // belt_holder_w = slider_d;
+  belt_holder_l = belt_wall_t + tensioner_size[1] + sin(clamp_rot) * clamp_l;
+
+  echo(h);
+
   difference () {
     union () {
       linear_extrude (h) {
@@ -29,26 +52,34 @@ module z_gantry_common () {
         v_slot_2d_slider(loose_fit);
       }
 
-      to_z_belt_y_center () {
-        translate([-belt_holder_w / 2, 0])
-          cube([belt_holder_w , -z_belt_z_v_slot_y_offset() - slider_d / 2, h]);
-      }
+      translate([-belt_holder_w / 2, -belt_holder_l - slider_d / 2])
+        cube([belt_holder_w , belt_holder_l, h]);
 
     }
 
     clamp_w = gt2_w + (belt_holder_w - gt2_w) / 2;
     to_z_belt_y_center () {
       translate([0, gt2_16t_pulley_pitch_d / 2]) {
-        translate([(belt_holder_w - clamp_w) / 2, 0, h])
-          rotate([-15, 0, 0])
-            rotate([0, 90, 180])
-              gt2_clearance(gt2_clamp_min_teeth, width = clamp_w);
+        translate([(belt_holder_w - clamp_w) / 2, 0, h]) {
+          // These rotations allow us to both fit more belt in the same space,
+          // as well as increase the resilience of the teeth, and remove the need
+          // for supports (as they are no longer aligned with layers, and don't
+          // need to be painted in the air).
+          rotate([-clamp_rot, 0, 180])
+            translate([-clamp_w / 2, -gt2_pld, -clamp_idle_l - sin(clamp_rot) * gt2_t])
+              cube([clamp_w, gt2_t, clamp_idle_l + 2 * sin(clamp_rot) * gt2_t]);
+
+          translate([0, clamp_idle_l * tan(clamp_rot), -clamp_idle_l * cos(clamp_rot)])
+            rotate([-clamp_rot, 0, 0])
+              rotate([0, 90, 180])
+                gt2_clearance(clamp_teeth, width = clamp_w);
+        }
 
         resize([
-          for (dimension = gt2_tensioner_clamp_size(gt2_clamp_min_teeth)) dimension + fit
+          for (dimension = tensioner_size) dimension + fit
         ])
           hull()
-            gt2_tensioner_clamp(gt2_clamp_min_teeth);
+            gt2_tensioner_clamp(clamp_teeth);
 
         to_gt2_tensioner_clamp_bolt()
           bolt(bolt, length = h, kind = "socket_head", countersink = 1);
