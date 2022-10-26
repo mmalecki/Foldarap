@@ -130,8 +130,8 @@ module plunger_clearance (fit = 0) {
     cylinder(d = kipp0334_210_flange_d + fit, h = kipp0334_210_flange_l);
 
   // Access hole for the plungers, on the off chance you need to push them out.
-  translate([0, 0, -depth]) {
-    cylinder(d = 3.5, h = depth);
+  translate([0, kipp0334_210_d / 4, -depth]) {
+    cylinder(d = 2.4, h = depth);
   }
 }
 
