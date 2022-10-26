@@ -15,3 +15,6 @@ gt2_clamp_min_teeth = 6;
 
 gt2_20t_idler_d = 18;
 gt2_20t_idler_h = 9;
+
+gt2_16t_idler_d = 14;
+gt2_16t_idler_h = 9;
