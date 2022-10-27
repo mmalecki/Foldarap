@@ -30,7 +30,7 @@ module z_idler () {
   idler_d_fit = gt2_16t_idler_d + loose_fit;
   idler_h_fit = gt2_16t_idler_h + loose_fit;
   idler_total_l = z_idler_l();
-  idler_mount_w = idler_h_fit + bolt_wall_h + nut_wall_h;
+  idler_mount_w = idler_h_fit + 2 * nut_wall_h;
 
   difference () {
     hull () {
@@ -40,7 +40,7 @@ module z_idler () {
       translate([0, 0, h / 2]) {
         rotate([0, 90, 0])
           to_z_belt_y_center() {
-            cylinder(d1 = nut_wall_d, d2 = bolt_wall_d, h = idler_mount_w, center = true);
+            cylinder(d = nut_wall_d, h = idler_mount_w, center = true);
           }
       }
     }
