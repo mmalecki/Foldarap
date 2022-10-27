@@ -36,7 +36,7 @@ module z_gantry_common () {
       linear_extrude (h) {
         difference () {
           translate([-slider_d / 2, -slider_d / 2])
-            square([slider_d + z_x_frame_offset - x_fit, slider_d]);
+            square([v_slot_d + v_slot_wall_t + z_x_frame_offset - x_fit, slider_d]);
 
           v_slot_2d_clearance(loose_fit);
         }
