@@ -7,7 +7,7 @@ h = gt2_16t_idler_d + loose_fit;
 // Safety margin, as one broke on me before with the usual `nut_wall_d`:
 idler_nut_wall_d = nut_wall_d + 2;
 
-function z_idler_l () = abs(z_belt_z_v_slot_y_offset()) - v_slot_d / 2 - v_slot_wall_t + idler_nut_wall_d;
+function z_idler_l () = abs(z_belt_z_v_slot_y_offset()) + idler_nut_wall_d / 2 - v_slot_d / 2 - v_slot_wall_t;
 
 function z_idler_h () = h;
 
@@ -40,8 +40,16 @@ module z_idler () {
 
   difference () {
     hull () {
-      translate([-idler_mount_w / 2,  -v_slot_d / 2 - v_slot_wall_t - idler_total_l / 2, 0]) {
-        cube([idler_mount_w, idler_total_l / 2, h]);
+      // Make sure the idler is printable without supports by extending a cube
+      // from the center of the idler nut towards the v-slot with a length
+      // so that the angle between the hull shape and the build plate is 45 degrees.
+      support_l = idler_total_l / 2 + (h / 2 * sqrt(2) / 2);
+      translate([
+        -idler_mount_w / 2,
+        -v_slot_d / 2 - v_slot_wall_t - support_l,
+        0
+      ]) {
+        cube([idler_mount_w, support_l, h]);
       }
       translate([0, 0, h / 2]) {
         rotate([0, 90, 0])
