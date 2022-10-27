@@ -95,6 +95,7 @@ module top_corner () {
   }
 }
 
+// Y offset from the center of the Z extrusion to Y of the center of the belt path.
 function z_belt_z_v_slot_y_offset () = -v_slot_d / 2 - v_slot_wall_t - nema17_d / 2 + z_stepper_y_inset;
 
 // Translates from the center of the Z extrusion to Y of the center of the belt path.
