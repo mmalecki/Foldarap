@@ -4,8 +4,10 @@ use <vitamins/v-slot.scad>;
 use <top-corner.scad>;
 
 h = gt2_16t_idler_d + loose_fit;
+// Safety margin, as one broke on me before with the usual `nut_wall_d`:
+idler_nut_wall_d = nut_wall_d + 2;
 
-function z_idler_l () = abs(z_belt_z_v_slot_y_offset()) - v_slot_d / 2 - v_slot_wall_t + nut_wall_d;
+function z_idler_l () = abs(z_belt_z_v_slot_y_offset()) - v_slot_d / 2 - v_slot_wall_t + idler_nut_wall_d;
 
 function z_idler_h () = h;
 
@@ -40,7 +42,7 @@ module z_idler () {
       translate([0, 0, h / 2]) {
         rotate([0, 90, 0])
           to_z_belt_y_center() {
-            cylinder(d = nut_wall_d, h = idler_mount_w, center = true);
+            cylinder(d = idler_nut_wall_d, h = idler_mount_w, center = true);
           }
       }
     }
