@@ -33,7 +33,7 @@ module v_slot_2d_slider(original_fit) {
     rotate([0, 0, side * 90]) {
       translate([v_slot_d / 2 + v_slot_sliding_fit, 0]) {
           for (part = [-1, 1]) {
-          translate([0, part * v_slot_d / 4]) {
+          translate([0, part * v_slot_d / 3]) {
             polygon(points = [
               [0, -slider_w / 2 + slider_taper_w],
               [0, slider_w / 2 - slider_taper_w],
