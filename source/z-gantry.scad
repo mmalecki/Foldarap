@@ -5,46 +5,38 @@ use <vitamins/v-slot.scad>;
 use <catchnhole/catchnhole.scad>;
 include <parameters.scad>;
 include <vitamins/gt2-parameters.scad>;
-include <vitamins/mgn12-parameters.scad>;
 
-mgn = false;
-
-clamp_rot = 12.5;
+clamp_rot = 15;
 clamp_teeth = gt2_clamp_min_teeth + 1;
 clamp_idle = 1;
 clamp_idle_l = clamp_idle * gt2_pitch;
 
 clamp_l = gt2_pitch * clamp_teeth;
 
-tensioner_clamp_teeth = gt2_clamp_min_teeth;
+tensioner_clamp_teeth = gt2_clamp_min_teeth + 1;
 
 tensioner_size = gt2_tensioner_clamp_size(tensioner_clamp_teeth);
-h = max(
-
-  (cos(clamp_rot) * clamp_l) +
-  (cos(clamp_rot) * clamp_idle_l) +
-  tensioner_size[2] +
-  belt_wall_t,
-
-  mgn ? mgn12_carriage_l : 0
-);
-
+h = (cos(clamp_rot) * clamp_l) +
+    (cos(clamp_rot) * clamp_idle_l) +
+    tensioner_size[2] +
+    belt_wall_t;
 
 x_hold_w = z_x_frame_offset + frame_bolt_wall_d;
+x_fit = 0.2;
+
+function z_gantry_h () = h;
 
 module z_gantry_common () {
   slider_d = v_slot_d + 2 * v_slot_wall_t;
   belt_holder_w = gt2_w + 2 * belt_wall_t + fit;
   belt_holder_l = belt_wall_t + tensioner_size[1] + sin(clamp_rot) * clamp_l;
 
-  echo(h);
-
   difference () {
     union () {
       linear_extrude (h) {
         difference () {
           translate([-slider_d / 2, -slider_d / 2])
-            square([slider_d, slider_d]);
+            square([slider_d + z_x_frame_offset - x_fit, slider_d]);
 
           v_slot_2d_clearance(loose_fit);
         }
@@ -105,11 +97,12 @@ module z_gantry_common () {
 
     translate([v_slot_d / 2 + v_slot_wall_t, 0, v_slot_d / 2 + v_slot_hold_offset]) {
       rotate([0, 90, 0])
-        v_slot_clearance(x_v_slot_l, fit = tight_fit);
+        v_slot_clearance(x_v_slot_l, fit = fit);
 
+      // The bolt holding the X axis:
       translate([0, 0, v_slot_d / 2]) {
         hull () {
-          for (spot = [x_hold_w / 2, x_hold_w])
+          for (spot = [z_x_frame_offset + frame_bolt_wall_d / 2, x_hold_w])
             translate([spot, 0])
               bolt(frame_bolt, length = v_slot_wall_t);
         }
