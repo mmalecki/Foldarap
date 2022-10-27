@@ -34,7 +34,6 @@ rotate([z_axis_x_rotation, 0]) {
     z_axis_left_assembly(z);
   }
 
-  echo(z_axis_x_v_slot_bottom_offset());
   translate([-x_v_slot_l / 2, 0, frame_v_slot_z_spacing + z_axis_x_v_slot_bottom_offset() + z + v_slot_d / 2])
     x_axis_assembly();
 }
