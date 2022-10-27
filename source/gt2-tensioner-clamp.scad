@@ -22,7 +22,7 @@ module gt2_tensioner_clamp (teeth, width = gt2_w) {
 
     rotate([0, 270, 180]) gt2_clearance(teeth);
     to_gt2_tensioner_clamp_bolt () {
-      nutcatch_parallel(bolt, height_clearance = h - bolt_wall_h - nut_height(bolt));
+      nutcatch_parallel(bolt, height_clearance = h - nut_wall_h - nut_height(bolt));
       bolt(bolt, length = h);
     }
   }
