@@ -1,4 +1,5 @@
 use <catchnhole/catchnhole.scad>;
+use <z-idler.scad>;
 use <vitamins/v-slot.scad>;
 include <parameters.scad>;
 
@@ -26,6 +27,10 @@ depth = 17;
 w = 80;
 
 v_slot_mount_d = v_slot_d + 2 * v_slot_wall_t;
+
+z_idler_clearance = 1;
+
+function outer_hinge_z_idler_clearance () = z_idler_clearance;
 
 module outer_hinge_back_plate_2d (middle_chamfer = false) {
   chamfer_offset = middle_chamfer ? straight / 2 : 0;
@@ -121,6 +126,13 @@ module outer_hinge () {
 
     translate([z_x_frame_offset + v_slot_d / 2, 0, -h / 2])
       v_slot_clearance(z_v_slot_l);
+
+    translate([
+      z_x_frame_offset - v_slot_wall_t - loose_fit / 2,
+      -w / 2,
+      h / 2 - z_idler_clearance
+    ])
+      cube([v_slot_mount_d + loose_fit, v_slot_d / 2 + v_slot_wall_t + w / 2 + loose_fit, z_idler_clearance]);
   }
 }
 
@@ -134,5 +146,7 @@ module plunger_clearance (fit = 0) {
     cylinder(d = 2.4, h = depth);
   }
 }
+
+function hinge_outer_z_idler_clearance () = z_idler_clearance;
 
 outer_hinge();
