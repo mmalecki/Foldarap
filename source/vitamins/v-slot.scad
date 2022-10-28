@@ -4,8 +4,24 @@ include <../parameters-design-rules.scad>;
 module v_slot_2d (fit = 0) {
   d_fit = v_slot_d + fit;
   difference () {
-    translate([-d_fit / 2, -d_fit / 2]) {
-      square([d_fit, d_fit]);
+    square([d_fit, d_fit], center = true);
+
+    for (spot = [0 : 3]) {
+      rotate([0, 0, spot * 90]) {
+        translate([0, d_fit / 2 - v_slot_slot_h]) {
+          for (copy = [0, 1]) {
+            mirror([copy, 0, 0]) {
+              polygon([
+                [-v_slot_slot_outer_w / 2, v_slot_slot_h],
+                [-v_slot_slot_inner_w / 2, v_slot_slot_h - v_slot_outer_wall_t],
+                [-v_slot_slot_inner_w / 2, 0],
+                [0, 0],
+                [0, v_slot_slot_h],
+              ]);
+            }
+          }
+        }
+      }
     }
 
     circle(d = v_slot_center_hole_d);
