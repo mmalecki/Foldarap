@@ -35,9 +35,7 @@ module z_gantry_common () {
     union () {
       linear_extrude (h) {
         difference () {
-          translate([-slider_d / 2, -slider_d / 2])
-            square([v_slot_d + v_slot_wall_t + z_x_frame_offset - x_fit, slider_d]);
-
+          square([slider_d, slider_d], center = true);
           v_slot_2d_clearance(loose_fit);
         }
 
@@ -84,15 +82,22 @@ module z_gantry_common () {
     v_slot_hold_offset = h - v_slot_d - v_slot_wall_t;
     x_hold_offset = v_slot_d / 2 + z_x_frame_offset - x_fit;
 
-    translate([x_hold_offset, slider_d / 2, 0]) {
-      rotate([90, 0, 0]) linear_extrude (slider_d) {
-        polygon([
-          [0, h],
-          [frame_bolt_wall_d, h],
-          [frame_bolt_wall_d, h - v_slot_wall_t],
-          // Only hold on to a little bit from the sides:
-          [0, v_slot_hold_offset + v_slot_d * 3 / 4],
-        ]);
+    union () {
+      // We could also extrude this in the next part, but it's cleaner that way:
+      translate([v_slot_d / 2, -slider_d / 2, v_slot_hold_offset]) {
+        cube([z_x_frame_offset, slider_d, v_slot_d + v_slot_wall_t]);
+      }
+
+      translate([x_hold_offset, slider_d / 2, 0]) {
+        rotate([90, 0, 0]) linear_extrude (slider_d) {
+          polygon([
+            [0, h],
+            [frame_bolt_wall_d, h],
+            [frame_bolt_wall_d, h - v_slot_wall_t],
+            // Only hold on to a little bit from the sides:
+            [0, v_slot_hold_offset + v_slot_d * 3 / 4],
+          ]);
+        }
       }
     }
 
