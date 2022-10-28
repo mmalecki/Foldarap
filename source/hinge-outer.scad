@@ -71,7 +71,7 @@ module outer_hinge () {
           // However, here we move them to the ends of tolerance zones, so that
           // in the 2 stable positions, they mate with the slot in the extrusion
           // on one side only, but with tight tolerances.
-          end_of_fit_offset = 0.95 * (v_slot_slot_outer_w - kipp0334_210_relaxed_d) / 2;
+          end_of_fit_offset = 0.9 * (v_slot_slot_outer_w - kipp0334_210_relaxed_d) / 2;
           slot_offset = (h - v_slot_d) / 2;
           y_offset = 27.5;
 
