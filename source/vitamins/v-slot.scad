@@ -13,7 +13,7 @@ module v_slot_2d (fit = 0) {
 }
 
 module v_slot (h, fit = 0) {
-  linear_extrude (h) v_slot_2d();
+  linear_extrude (h) v_slot_2d(fit);
 }
 
 module v_slot_clearance (h, fit = 0) {
