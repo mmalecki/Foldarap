@@ -21,10 +21,10 @@ h = (cos(clamp_rot) * clamp_l) +
     tensioner_size[2] +
     belt_wall_t;
 
-x_hold_w = z_x_frame_offset + frame_bolt_wall_d;
 x_fit = 0.2;
 
 function z_gantry_h () = h;
+function z_gantry_x_fit() = x_fit;
 
 module z_gantry_common () {
   slider_d = v_slot_d + 2 * v_slot_wall_t;
@@ -82,27 +82,28 @@ module z_gantry_common () {
   // The part that holds the X axis:
   difference () {
     v_slot_hold_offset = h - v_slot_d - v_slot_wall_t;
+    x_hold_offset = v_slot_d / 2 + z_x_frame_offset - x_fit;
 
-    translate([slider_d / 2, slider_d / 2, 0]) {
+    translate([x_hold_offset, slider_d / 2, 0]) {
       rotate([90, 0, 0]) linear_extrude (slider_d) {
         polygon([
           [0, h],
-          [x_hold_w, h],
-          [x_hold_w, h - v_slot_wall_t],
+          [frame_bolt_wall_d, h],
+          [frame_bolt_wall_d, h - v_slot_wall_t],
           // Only hold on to a little bit from the sides:
           [0, v_slot_hold_offset + v_slot_d * 3 / 4],
         ]);
       }
     }
 
-    translate([v_slot_d / 2 + v_slot_wall_t, 0, v_slot_d / 2 + v_slot_hold_offset]) {
+    translate([x_hold_offset, 0, v_slot_d / 2 + v_slot_hold_offset]) {
       rotate([0, 90, 0])
         v_slot_clearance(x_v_slot_l, fit = fit);
 
       // The bolt holding the X axis:
       translate([0, 0, v_slot_d / 2]) {
         hull () {
-          for (spot = [z_x_frame_offset + frame_bolt_wall_d / 2, x_hold_w])
+          for (spot = [frame_bolt_wall_d / 2, frame_bolt_wall_d])
             translate([spot, 0])
               bolt(frame_bolt, length = v_slot_wall_t);
         }
