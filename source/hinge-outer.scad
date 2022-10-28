@@ -28,7 +28,7 @@ w = 80;
 
 v_slot_mount_d = v_slot_d + 2 * v_slot_wall_t;
 
-z_idler_clearance = 1;
+z_idler_clearance = 0;
 
 function outer_hinge_z_idler_clearance () = z_idler_clearance;
 
