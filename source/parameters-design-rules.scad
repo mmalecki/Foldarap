@@ -35,3 +35,6 @@ frame_bolt_wall_d = 7.5;
 
 // And here's the bolt you could tap into the end of extrusions, if so inclined.
 frame_tap_bolt = "M5";
+
+endstop_wall_t = 1.6;
+endstop_fit = fit;
