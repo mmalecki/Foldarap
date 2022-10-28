@@ -6,11 +6,10 @@ slack = 0.1;
 // How much to explode the view.
 e = 10;
 
-// Z axis Y rotation (as in folding - 90 degrees == folded, 0 == upright).
+// Z axis Y rotation (as in folding - 90 degrees for folded position, 0 for upright).
 z_axis_x_rotation = 0;
 
-// Where the gantry is (in absolute physical Z axis position, e.g. 0 means
-// you're buying a new nozzle/bed).
+// Where the gantry is (in absolute physical Z axis position, e.g. 0 means you're buying a new nozzle/bed).
 z = 0;
 
 include <../parameters.scad>;
@@ -21,6 +20,7 @@ use <z-axis.scad>;
 use <z-axis-right.scad>;
 use <z-axis-left.scad>;
 use <x-axis.scad>;
+use <frame.scad>;
 
 rotate([z_axis_x_rotation, 0]) {
   // The right Z axis (when looking from the front).
@@ -34,6 +34,8 @@ rotate([z_axis_x_rotation, 0]) {
     z_axis_left_assembly(z);
   }
 
-  translate([-x_v_slot_l / 2, 0, frame_v_slot_z_spacing + z_axis_x_v_slot_bottom_offset() + z + v_slot_d / 2])
+  translate([-x_v_slot_l / 2, 0, frame_v_slot_z_spacing / 2 + z_axis_x_v_slot_bottom_offset() + z + v_slot_d / 2])
     x_axis_assembly();
 }
+
+frame_assembly();

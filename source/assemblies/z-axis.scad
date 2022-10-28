@@ -15,23 +15,24 @@ module z_axis_assembly (
   z = 0,
   slack = 0.1
 ) {
-  v_slot_mockup(z_v_slot_l);
+  translate([0, 0, -frame_v_slot_z_spacing / 2]) {
+    v_slot_mockup(z_v_slot_l);
+
+    translate([0, 0, z_v_slot_l])
+      top_corner();
+  }
 
   mirror([1, 0, 0])
-    translate([-z_x_frame_offset - v_slot_d / 2, 0, frame_v_slot_z_spacing / 2])
+    translate([-z_x_frame_offset - v_slot_d / 2, 0, 0])
       outer_hinge();
 
-  translate([0, 0, frame_v_slot_z_spacing - outer_hinge_z_idler_clearance() + slack]) {
+  translate([0, 0, frame_v_slot_z_spacing / 2- outer_hinge_z_idler_clearance() + slack]) {
     z_idler();
 
     translate([0, 0, z_idler_h() + z + slack]) children();
 
     to_z_belt_y_center () belt_mockup(z_v_slot_l - frame_v_slot_z_spacing);
   }
-
-
-  translate([0, 0, z_v_slot_l])
-    top_corner();
 }
 
 z_axis();
