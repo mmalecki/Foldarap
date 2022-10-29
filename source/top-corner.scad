@@ -13,6 +13,28 @@ top_hold_w = 13;
 z_stepper_y_inset = (nema17_d - nema17_shaft_plate_fit_d) / 4;
 z_stepper_bolt_l = stepper_bolt_l + stepper_mount_plate_t;
 
+module z_stepper_mount () {
+  difference () {
+    nema17_mount_plate();
+
+    translate([0, 0, stepper_bolt_l + stepper_mount_plate_t]) {
+      translate([-nema17_bolt_s / 2, -nema17_bolt_s / 2]) {
+        rotate([180, 0, 0])
+          bolt(bolt, length = z_stepper_bolt_l);
+      }
+      translate([-nema17_bolt_s / 2, nema17_bolt_s / 2]) {
+        rotate([180, 0, 0])
+          bolt(bolt, length = z_stepper_bolt_l);
+      }
+
+      translate([nema17_bolt_s / 2, nema17_bolt_s / 2]) {
+        rotate([180, 0, 0])
+          bolt(bolt, length = z_stepper_bolt_l);
+      }
+    }
+  }
+}
+
 module side_bolt_pair () {
   translate([0, -v_slot_d / 2, v_slot_d / 2]) rotate([90, 0, 0])
     bolt(frame_bolt, length = v_slot_wall_t);
@@ -27,12 +49,23 @@ module top_corner () {
   w = v_slot_wall_t + v_slot_d + z_x_frame_offset + top_hold_w;
   h = z_hold_h + v_slot_wall_t;
   l = v_slot_d + 2 * v_slot_wall_t;
+  stepper_x_offset = -v_slot_d / 2 - (v_slot_wall_t - stepper_mount_plate_t);
 
   difference () {
-    translate([-v_slot_wall_t - v_slot_d / 2, -v_slot_wall_t - v_slot_d / 2])
-      cube([w, l, h]);
+    union () {
+      translate([-v_slot_wall_t - v_slot_d / 2, -v_slot_wall_t - v_slot_d / 2])
+        cube([w, l, h]);
 
-    v_slot_clearance(h = z_hold_h);
+      // And finally hold the stepper.
+      translate([stepper_x_offset, 0, h - nema17_d / 2]) {
+        to_z_belt_y_center() {
+          rotate([-90, 0, 90])
+            z_stepper_mount();
+        }
+      }
+    }
+
+    translate([0, 0, -z_v_slot_l + z_hold_h]) v_slot_clearance(h = z_v_slot_l);
 
     translate([0, 0, z_hold_h])
       bolt(frame_tap_bolt, length = v_slot_wall_t);
@@ -55,7 +88,6 @@ module top_corner () {
     }
   }
 
-  stepper_x_offset = -v_slot_d / 2 - (v_slot_wall_t - stepper_mount_plate_t);
   // Add a support to the stepper mount plate to increase rigidity.
   translate([stepper_x_offset, -v_slot_d / 2 - v_slot_wall_t, h - stepper_mount_plate_t]) {
     linear_extrude(stepper_mount_plate_t) {
@@ -64,33 +96,6 @@ module top_corner () {
         [0, -nema17_d / 2],
         [nema17_d / 2, 0]
       ]);
-    }
-  }
-
-  // And finally hold the stepper.
-  translate([stepper_x_offset, 0, h - nema17_d / 2]) {
-    to_z_belt_y_center() {
-      rotate([-90, 0, 90]) {
-        difference () {
-          nema17_mount_plate();
-
-          translate([0, 0, stepper_bolt_l + stepper_mount_plate_t]) {
-            translate([-nema17_bolt_s / 2, -nema17_bolt_s / 2]) {
-              rotate([180, 0, 0])
-                bolt(bolt, length = z_stepper_bolt_l);
-            }
-            translate([-nema17_bolt_s / 2, nema17_bolt_s / 2]) {
-              rotate([180, 0, 0])
-                bolt(bolt, length = z_stepper_bolt_l);
-            }
-
-            translate([nema17_bolt_s / 2, nema17_bolt_s / 2]) {
-              rotate([180, 0, 0])
-                bolt(bolt, length = z_stepper_bolt_l);
-            }
-          }
-        }
-      }
     }
   }
 }
@@ -103,4 +108,4 @@ module to_z_belt_y_center () {
   translate([0, z_belt_z_v_slot_y_offset()]) children();
 }
 
-top_corner();
+mirror([1, 0, 0]) top_corner();
