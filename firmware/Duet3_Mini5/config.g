@@ -42,6 +42,7 @@ M574 Y1 S1 P"io6.in"                     ; configure switch-type (e.g. microswit
 M950 S0 C"io1.out"
 M558 P9 C"io1.in" H5 F120 T6000
 G31 X-17.244 Y-20.75 Z3.3 P25
+M574 Z1 S2
 
 M557 X20:120 Y30:120 S15
 M376 H2
