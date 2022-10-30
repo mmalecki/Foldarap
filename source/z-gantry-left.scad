@@ -18,7 +18,7 @@ lgx_top_side_bolt_center_offset = 8;
 lgx_d = 42;
 
 // We need to get some clearance from the endstop:
-lgx_x_offset = 9.5;
+lgx_x_offset = 7;
 
 // This still needs to be mirrored. Do that for part preview, but leave the module
 // as is for the gantry assembly to be rotated as a whole.
@@ -27,7 +27,7 @@ module z_gantry_left () {
   h = z_gantry_h();
 
   translate([
-    v_slot_d / 2 + z_x_frame_offset - z_gantry_x_fit() - endstop_holder_h(),
+    v_slot_d / 2 + z_x_frame_offset - z_gantry_x_fit() - endstop_holder_h() + frame_bolt_wall_d,
     v_slot_d / 2 + v_slot_wall_t + endstop_holder_w() / 2 - endstop_wall_t,
     h - endstop_holder_l() / 2
   ]) rotate([90, 0, 90]) endstop_holder();
