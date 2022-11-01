@@ -18,16 +18,16 @@ M586 P2 S0                               ; disable Telnet
 ; Drives
 M569 P0 S0                               ; physical drive 0 goes backwards X
 M569 P1 S0                               ; physical drive 1 goes backwards Y
-M569 P2 S1                               ; physical drive 2 goes backwards Z-left
-M569 P3 S0                               ; physical drive 3 goes backwards Z-right
-M569 P4 S0                               ; physical drive 3 goes backwards E
+M569 P2 S0                               ; physical drive 2 goes backwards Z-left
+M569 P3 S1                               ; physical drive 3 goes backwards Z-right
+M569 P4 S1                               ; physical drive 3 goes backwards E
 M584 X0 Y1 Z2:3 E4                       ; set drive mapping
 M350 X32 Y32 Z32 E32 I1                  ; configure microstepping
 M92 X152.50 Y160.80 Z200.00 E800.00      ; set steps per mm
-M566 X600.00 Y600.00 Z300.00 E300.00     ; set maximum instantaneous speed changes (mm/min)
-M203 X6000.00 Y6000.00 Z1500.00 E3000.00 ; set maximum speeds (mm/min)
-M201 X600.00 Y600.00 Z300.00 E1000.00    ; set accelerations (mm/s^2)
-M906 X800 Y1200 Z1500 E575               ; set motor currents (mA)
+M566 X600.00 Y600.00 Z60 E600.00         ; set maximum instantaneous speed changes (mm/min)
+M203 X6000.00 Y6000.00 Z600 E3000.00     ; set maximum speeds (mm/min)
+M201 X600.00 Y600.00 Z150 E1000.00       ; set accelerations (mm/s^2)
+M906 X800 Y1200 Z1750 E575               ; set motor currents (mA)
 M84 S0                                   ; Disable motor idle current reduction
 
 ; Axis Limits
