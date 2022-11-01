@@ -74,7 +74,7 @@ G10 P0 R0 S0
 T0
 
 ; Pressure advance
-M572 D0 S0.2 ; value picked according to https://docs.duet3d.com/en/User_manual/Tuning/Pressure_advance
+M572 D0 S0.1 ; value picked according to https://docs.duet3d.com/en/User_manual/Tuning/Pressure_advance
 
 ; Custom settings are not defined
 M501         ; load config-override.g
