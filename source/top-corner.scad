@@ -1,6 +1,7 @@
 use <catchnhole/catchnhole.scad>;
 use <vitamins/v-slot.scad>;
 use <vitamins/nema17.scad>;
+include <vitamins/nema17-parameters.scad>;
 include <parameters.scad>;
 // How much of the Z extrusion we want to hold at the top corner. Measured in CAD.
 z_hold_h = 20;
@@ -15,7 +16,7 @@ z_stepper_bolt_l = stepper_bolt_l + stepper_mount_plate_t;
 
 module z_stepper_mount () {
   difference () {
-    nema17_mount_plate();
+    nema17_mount_plate([nema17_chamfer, nema17_chamfer, nema17_chamfer, 0]);
 
     translate([0, 0, stepper_bolt_l + stepper_mount_plate_t]) {
       translate([-nema17_bolt_s / 2, -nema17_bolt_s / 2]) {
@@ -47,7 +48,7 @@ module side_bolt_pair () {
 // Part is centered around the top of the Z extrusion.
 module top_corner () {
   w = v_slot_wall_t + v_slot_d + z_x_frame_offset + top_hold_w;
-  h = z_hold_h + v_slot_wall_t;
+  h = top_corner_h();
   l = v_slot_d + 2 * v_slot_wall_t;
   stepper_x_offset = -v_slot_d / 2 - (v_slot_wall_t - stepper_mount_plate_t);
 
@@ -107,5 +108,7 @@ function z_belt_z_v_slot_y_offset () = -v_slot_d / 2 - v_slot_wall_t - nema17_d 
 module to_z_belt_y_center () {
   translate([0, z_belt_z_v_slot_y_offset()]) children();
 }
+
+function top_corner_h () = z_hold_h + v_slot_wall_t;
 
 mirror([1, 0, 0]) top_corner();
