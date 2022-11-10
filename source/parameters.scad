@@ -5,7 +5,6 @@ include <vitamins/nema17-parameters.scad>;
 include <vitamins/v-slot-parameters.scad>;
 include <vitamins/gt2-parameters.scad>;
 
-x_carriage_bolt = "M3";
 x_carriage_bolt_s = 25;
 
 y_carriage_slider_bolt = "M3";
