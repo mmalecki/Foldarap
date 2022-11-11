@@ -15,6 +15,8 @@ M586 P0 S1                               ; enable HTTP
 M586 P1 S0                               ; disable FTP
 M586 P2 S0                               ; disable Telnet
 
+M669 K0                                  ; Cartesian kinematics
+
 ; Drives
 M569 P0 S0                               ; physical drive 0 goes backwards X
 M569 P1 S0                               ; physical drive 1 goes backwards Y
