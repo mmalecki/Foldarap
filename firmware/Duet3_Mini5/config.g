@@ -43,8 +43,8 @@ M574 Y1 S1 P"io6.in"                     ; configure switch-type (e.g. microswit
 ; Z-Probe
 M950 S0 C"io1.out"
 M558 P9 C"io1.in" H5 F120 T6000
-G31 X-17.244 Y-20.75 Z3.3 P25
-M574 Z1 S2
+G31 X-17.244 Y-20.75 Z3.3 P25            ; define probe offsets
+M574 Z1 S2                               ; use the z-probe as z endstop
 M402                                     ; stow the probe on startup
 
 M557 X20:120 Y30:120 S15
@@ -58,9 +58,9 @@ M140 H0
 M143 H0 S120
 
 M308 S1 P"temp1" Y"thermistor" T100000 B4725 C7.06e-8 ; the hot-end thermistor as sensor 1
-M950 H1 C"out1" T1                                   ; create a hot-end heater on out1
-M307 H1 B0 S1.00                                     ; disable bang-bang mode for heater  and set PWM limit
-M143 H1 S280                                         ; set temperature limit for heater 1 to 280C
+M950 H1 C"out1" T1                                    ; create a hot-end heater on out1
+M307 H1 B0 S1.00                                      ; disable bang-bang mode for heater  and set PWM limit
+M143 H1 S280                                          ; set temperature limit for heater 1 to 280C
 
 ; Fans
 M950 F0 C"out5" Q100 ; the print fan
