@@ -36,6 +36,9 @@ rotate([z_axis_x_rotation, 0]) {
 
   translate([-x_v_slot_l / 2, 0, frame_v_slot_z_spacing / 2 + z_axis_x_v_slot_bottom_offset() + z + v_slot_d / 2])
     x_axis_assembly();
+
+  translate([-x_v_slot_l / 2, 0, z_v_slot_l - frame_v_slot_z_spacing / 2 + v_slot_d / 2])
+    rotate([0, 90, 0]) v_slot_mockup(x_v_slot_l);
 }
 
 frame_assembly();
