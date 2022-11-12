@@ -50,7 +50,7 @@ module e3Dv6_bltouch_mount () {
       difference () {
         cube([
           bltouch_arm_w,
-          bltouch_mount_offset + bltouch_bolt_s + standoff_d,
+          bltouch_mount_offset + bltouch_bolt_s + bolt_wall_d,
           bltouch_mount_h
         ]);
 

@@ -15,19 +15,21 @@ M586 P0 S1                               ; enable HTTP
 M586 P1 S0                               ; disable FTP
 M586 P2 S0                               ; disable Telnet
 
+M669 K0                                  ; Cartesian kinematics
+
 ; Drives
 M569 P0 S0                               ; physical drive 0 goes backwards X
 M569 P1 S0                               ; physical drive 1 goes backwards Y
-M569 P2 S1                               ; physical drive 2 goes backwards Z-left
-M569 P3 S0                               ; physical drive 3 goes backwards Z-right
-M569 P4 S0                               ; physical drive 3 goes backwards E
+M569 P2 S0                               ; physical drive 2 goes backwards Z-left
+M569 P3 S1                               ; physical drive 3 goes backwards Z-right
+M569 P4 S1                               ; physical drive 3 goes backwards E
 M584 X0 Y1 Z2:3 E4                       ; set drive mapping
-M350 X32 Y32 Z32 E32 I0                  ; configure microstepping without interpolation
-M92 X152.50 Y160.80 Z152.50 E280.00      ; set steps per mm
-M566 X600.00 Y600.00 Z300.00 E300.00     ; set maximum instantaneous speed changes (mm/min)
-M203 X6000.00 Y6000.00 Z1500.00 E3000.00 ; set maximum speeds (mm/min)
-M201 X600.00 Y600.00 Z300.00 E1000.00    ; set accelerations (mm/s^2)
-M906 X800 Y1200 Z1500 E1000              ; set motor currents (mA)
+M350 X32 Y32 Z32 E32 I1                  ; configure microstepping
+M92 X152.50 Y160.80 Z200.00 E800.00      ; set steps per mm
+M566 X600.00 Y600.00 Z60 E600.00         ; set maximum instantaneous speed changes (mm/min)
+M203 X6000.00 Y6000.00 Z600 E3000.00     ; set maximum speeds (mm/min)
+M201 X600.00 Y600.00 Z150 E1000.00       ; set accelerations (mm/s^2)
+M906 X800 Y1200 Z1750 E575               ; set motor currents (mA)
 M84 S0                                   ; Disable motor idle current reduction
 
 ; Axis Limits
@@ -41,10 +43,13 @@ M574 Y1 S1 P"io6.in"                     ; configure switch-type (e.g. microswit
 ; Z-Probe
 M950 S0 C"io1.out"
 M558 P9 C"io1.in" H5 F120 T6000
-G31 X-17.244 Y-20.75 Z3.3 P25
+G31 X-17.244 Y-20.75 Z3.3 P25            ; define probe offsets
+M574 Z1 S2                               ; use the z-probe as z endstop
+M402                                     ; stow the probe on startup
 
 M557 X20:120 Y30:120 S15
 M376 H2
+M671 X-42:184 Y0:0
 
 ; Heaters
 M308 S0 P"temp0" Y"thermistor" T100000 B3950   ; the bed thermistor as sensor 0
@@ -54,9 +59,9 @@ M140 H0
 M143 H0 S120
 
 M308 S1 P"temp1" Y"thermistor" T100000 B4725 C7.06e-8 ; the hot-end thermistor as sensor 1
-M950 H1 C"out1" T1                                   ; create a hot-end heater on out1
-M307 H1 B0 S1.00                                     ; disable bang-bang mode for heater  and set PWM limit
-M143 H1 S280                                         ; set temperature limit for heater 1 to 280C
+M950 H1 C"out1" T1                                    ; create a hot-end heater on out1
+M307 H1 B0 S1.00                                      ; disable bang-bang mode for heater  and set PWM limit
+M143 H1 S280                                          ; set temperature limit for heater 1 to 280C
 
 ; Fans
 M950 F0 C"out5" Q100 ; the print fan
@@ -72,7 +77,7 @@ G10 P0 R0 S0
 T0
 
 ; Pressure advance
-M572 D0 S0.2 ; value picked according to https://docs.duet3d.com/en/User_manual/Tuning/Pressure_advance
+M572 D0 S0.1 ; value picked according to https://docs.duet3d.com/en/User_manual/Tuning/Pressure_advance
 
 ; Custom settings are not defined
 M501         ; load config-override.g
