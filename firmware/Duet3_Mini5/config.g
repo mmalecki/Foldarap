@@ -49,6 +49,7 @@ M402                                     ; stow the probe on startup
 
 M557 X20:120 Y30:120 S15
 M376 H2
+M671 X-42:184 Y0:0
 
 ; Heaters
 M308 S0 P"temp0" Y"thermistor" T100000 B3950   ; the bed thermistor as sensor 0
