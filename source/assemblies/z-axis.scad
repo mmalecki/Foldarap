@@ -47,4 +47,4 @@ module z_axis_assembly (
   echo(str("z-axis belt x offset (for M671): ", z_axis_belt_x_offset()));
 }
 
-z_axis();
+z_axis_assembly();
