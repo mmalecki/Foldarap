@@ -16,7 +16,7 @@ z_stepper_bolt_l = stepper_bolt_l + stepper_mount_plate_t;
 
 module z_stepper_mount () {
   difference () {
-    nema17_mount_plate([nema17_chamfer, nema17_chamfer, nema17_chamfer, 0]);
+    nema17_mount_plate([nema17_chamfer, nema17_chamfer, 0, 0]);
 
     translate([0, 0, stepper_bolt_l + stepper_mount_plate_t]) {
       translate([-nema17_bolt_s / 2, -nema17_bolt_s / 2]) {
