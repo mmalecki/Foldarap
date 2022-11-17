@@ -16,7 +16,12 @@ z_stepper_bolt_l = stepper_bolt_l + stepper_mount_plate_t;
 
 module z_stepper_mount () {
   difference () {
-    nema17_mount_plate([nema17_chamfer, nema17_chamfer, 0, 0]);
+    nema17_mount_plate([
+      nema17_chamfer,
+      nema17_chamfer,
+      z_belt_side() == 1 ? 0 : nema17_chamfer,
+      z_belt_side() == -1 ? 0 : nema17_chamfer,
+    ]);
 
     translate([0, 0, stepper_bolt_l + stepper_mount_plate_t]) {
       translate([-nema17_bolt_s / 2, -nema17_bolt_s / 2]) {
@@ -90,11 +95,15 @@ module top_corner () {
   }
 
   // Add a support to the stepper mount plate to increase rigidity.
-  translate([stepper_x_offset, -v_slot_d / 2 - v_slot_wall_t, h - stepper_mount_plate_t]) {
+  translate([
+    stepper_x_offset,
+    z_belt_side() * (v_slot_d / 2 + v_slot_wall_t),
+    h - stepper_mount_plate_t
+  ]) {
     linear_extrude(stepper_mount_plate_t) {
       polygon([
         [0, 0],
-        [0, -nema17_d / 2],
+        [0, z_belt_side() * nema17_d / 2],
         [nema17_d / 2, 0]
       ]);
     }
@@ -102,7 +111,8 @@ module top_corner () {
 }
 
 // Y offset from the center of the Z extrusion to Y of the center of the belt path.
-function z_belt_z_v_slot_y_offset () = -v_slot_d / 2 - v_slot_wall_t - nema17_d / 2 + z_stepper_y_inset;
+function z_belt_z_v_slot_y_offset () = v_slot_d / 2 + v_slot_wall_t + nema17_d / 2 - z_stepper_y_inset;
+function z_belt_side () = sign(z_belt_z_v_slot_y_offset());
 
 // Translates from the center of the Z extrusion to Y of the center of the belt path.
 module to_z_belt_y_center () {
