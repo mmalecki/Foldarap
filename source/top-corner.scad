@@ -48,13 +48,24 @@ module side_bolt_pair () {
     bolt(frame_bolt, length = v_slot_wall_t);
 }
 
+function top_corner_stepper_x_offset () = -v_slot_d / 2 - (v_slot_wall_t - stepper_mount_plate_t);
+
+module top_corner_to_stepper_mount () {
+  translate([top_corner_stepper_x_offset(), 0, top_corner_h() - nema17_d / 2]) {
+    to_z_belt_y_center() {
+      rotate([-90, 0, 90])
+        children();
+    }
+  }
+}
+
 // Top corner, `mirror([0, 1, 0])` to get the other one.
 // Part is centered around the top of the Z extrusion.
 module top_corner () {
   w = v_slot_wall_t + v_slot_d + z_x_frame_offset + top_hold_w;
   h = top_corner_h();
   l = v_slot_d + 2 * v_slot_wall_t;
-  stepper_x_offset = -v_slot_d / 2 - (v_slot_wall_t - stepper_mount_plate_t);
+  stepper_x_offset = top_corner_stepper_x_offset();
 
   difference () {
     union () {
@@ -62,12 +73,8 @@ module top_corner () {
         cube([w, l, h]);
 
       // And finally hold the stepper.
-      translate([stepper_x_offset, 0, h - nema17_d / 2]) {
-        to_z_belt_y_center() {
-          rotate([-90, 0, 90])
-            z_stepper_mount();
-        }
-      }
+      top_corner_to_stepper_mount()
+        z_stepper_mount();
     }
 
     translate([0, 0, -z_v_slot_l + z_hold_h]) v_slot_clearance(h = z_v_slot_l);

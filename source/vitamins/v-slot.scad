@@ -74,3 +74,7 @@ module v_slot_2d_conduit (fit = 0, t = v_slot_wall_t) {
 module v_slot_conduit (h, fit = 0, t = v_slot_wall_t) {
   linear_extrude (h) v_slot_2d_conduit(fit, t);
 }
+
+module v_slot_mockup (length) {
+  color("silver") v_slot(length);
+}

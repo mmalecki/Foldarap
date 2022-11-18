@@ -1,4 +1,4 @@
-use <common.scad>;
+use <../vitamins/v-slot.scad>;
 include <../parameters.scad>;
 
 module x_axis_assembly () {

@@ -1,9 +1,11 @@
-use <common.scad>;
+use <../vitamins/v-slot.scad>;
+use <../vitamins/nema17.scad>;
 use <../top-corner.scad>;
 use <../hinge-outer.scad>;
 use <../z-idler.scad>;
 use <../z-gantry.scad>;
 use <../sizing.scad>;
+use <common.scad>;
 include <../parameters.scad>;
 
 function z_axis_gantry_offset () = z_idler_h() - outer_hinge_z_idler_clearance();
@@ -27,8 +29,12 @@ module z_axis_assembly (
   translate([0, 0, -frame_v_slot_z_spacing / 2]) {
     v_slot_mockup(z_v_slot_l);
 
-    translate([0, 0, z_v_slot_l])
+    translate([0, 0, z_v_slot_l]) {
       top_corner();
+      top_corner_to_stepper_mount() {
+        translate([0, 0, stepper_mount_plate_t]) nema17_mockup(h = 40);
+      }
+    }
   }
 
   mirror([1, 0, 0])

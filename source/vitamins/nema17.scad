@@ -62,9 +62,16 @@ module nema17_mounts () {
 
 module nema17_mockup (h) {
   third = h / 3;
-  color("silver")
+  color("silver") {
+    translate([0, 0, -nema17_shaft_plate_h])
+      cylinder(d = nema17_shaft_plate_d, h = nema17_shaft_plate_h + h);
+
+    translate([0, 0, -nema17_shaft_l])
+      cylinder(d = nema17_shaft_d, h = nema17_shaft_l);
+
     linear_extrude (third)
       nema17_mount_plate_2d();
+  }
 
   translate([0, 0, third]) {
     color("black") {
