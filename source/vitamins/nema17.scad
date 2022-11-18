@@ -25,4 +25,65 @@ module nema17_mount_plate_2d (chamfer = nema17_chamfer) {
   }
 }
 
-nema17_mount_plate([nema17_chamfer, nema17_chamfer, nema17_chamfer, 0]);
+module nema17_mounts () {
+  rotate([180, 0, 0]) {
+    if ($children == 1) {
+        translate([-nema17_bolt_s / 2, -nema17_bolt_s / 2])
+          children();
+
+        translate([-nema17_bolt_s / 2, nema17_bolt_s / 2])
+          children();
+
+        translate([nema17_bolt_s / 2, nema17_bolt_s / 2])
+          children();
+
+        translate([nema17_bolt_s / 2, -nema17_bolt_s / 2])
+          children();
+    }
+    else if ($children == 4) {
+      translate([nema17_bolt_s / 2, -nema17_bolt_s / 2])
+        children(0);
+
+      translate([-nema17_bolt_s / 2, -nema17_bolt_s / 2])
+        children(1);
+
+      translate([-nema17_bolt_s / 2, nema17_bolt_s / 2])
+        children(2);
+
+      translate([nema17_bolt_s / 2, nema17_bolt_s / 2])
+        children(3);
+    }
+    else {
+      // Never rotated an assertion before, but whatever.
+      assert(false, "only 1 or 4 children are accepted by `nema17_mounts()`");
+    }
+  }
+}
+
+module nema17_mockup (h) {
+  third = h / 3;
+  color("silver")
+    linear_extrude (third)
+      nema17_mount_plate_2d();
+
+  translate([0, 0, third]) {
+    color("black") {
+      linear_extrude (third)
+        offset(delta = -1, chamfer = true) nema17_mount_plate_2d();
+    }
+  }
+
+  translate([0, 0, 2 * third]) {
+    color("silver") {
+      linear_extrude (third)
+        nema17_mount_plate_2d();
+    }
+  }
+}
+
+
+
+nema17_mockup(40);
+
+translate([0, 0, 40])
+  nema17_mount_plate([nema17_chamfer, nema17_chamfer, nema17_chamfer, 0]);

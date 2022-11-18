@@ -19,23 +19,22 @@ module z_stepper_mount () {
     nema17_mount_plate([
       nema17_chamfer,
       nema17_chamfer,
-      z_belt_side() == 1 ? 0 : nema17_chamfer,
-      z_belt_side() == -1 ? 0 : nema17_chamfer,
+      z_belt_side() == -1 ? nema17_chamfer : 0,
+      z_belt_side() == 1 ? nema17_chamfer : 0,
     ]);
 
     translate([0, 0, stepper_bolt_l + stepper_mount_plate_t]) {
-      translate([-nema17_bolt_s / 2, -nema17_bolt_s / 2]) {
-        rotate([180, 0, 0])
-          bolt(bolt, length = z_stepper_bolt_l);
-      }
-      translate([-nema17_bolt_s / 2, nema17_bolt_s / 2]) {
-        rotate([180, 0, 0])
-          bolt(bolt, length = z_stepper_bolt_l);
-      }
-
-      translate([nema17_bolt_s / 2, nema17_bolt_s / 2]) {
-        rotate([180, 0, 0])
-          bolt(bolt, length = z_stepper_bolt_l);
+      nema17_mounts() {
+        bolt(bolt, length = z_stepper_bolt_l);
+        bolt(bolt, length = z_stepper_bolt_l);
+        union () {
+          if (z_belt_side() == -1) 
+            bolt(bolt, length = z_stepper_bolt_l);
+        };
+        union () {
+          if (z_belt_side() == 1) 
+            bolt(bolt, length = z_stepper_bolt_l);
+        };
       }
     }
   }
