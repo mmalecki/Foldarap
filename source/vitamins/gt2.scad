@@ -24,3 +24,12 @@ module gt2_clearance (teeth, width = gt2_w, fit = tight_fit) {
   translate([0, 0, -(width + fit) / 2]) linear_extrude (width + fit)
     gt2_2d_clearance(teeth, fit);
 }
+
+module gt2_belt_mockup (length) {
+  for (side = [-1, 1]) {
+    translate([0, side * gt2_16t_pulley_pitch_d / 2])
+      color("SaddleBrown") translate([-gt2_w / 2, -gt2_t /2])
+        cube([gt2_w, gt2_t, length]);
+  }
+  color("gray", 0.5) cylinder(d = 2, h = length);
+}
