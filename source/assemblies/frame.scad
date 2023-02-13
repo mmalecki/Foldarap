@@ -1,5 +1,4 @@
 include <../parameters.scad>;
-use <common.scad>;
 use <../vitamins/v-slot.scad>;
 
 module frame_square_assembly () {

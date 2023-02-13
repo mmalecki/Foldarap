@@ -15,7 +15,6 @@ z = 0;
 include <../parameters.scad>;
 include <../vitamins/gt2-parameters.scad>;
 use <../vitamins/v-slot.scad>;
-use <common.scad>;
 use <z-axis.scad>;
 use <z-axis-right.scad>;
 use <z-axis-left.scad>;
