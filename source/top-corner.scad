@@ -11,7 +11,7 @@ top_hold_w = 13;
 
 // We want to move the stepper close to the extrusion (forward in Y axis)
 // to save space. Calculate how close.
-z_stepper_y_inset = (nema17_d - nema17_shaft_plate_fit_d) / 4;
+z_stepper_y_inset = (nema17_d - nema17_shaft_plate_fit_d) / 2;
 z_stepper_bolt_l = stepper_bolt_l + stepper_mount_plate_t;
 
 module z_stepper_mount () {
@@ -23,12 +23,16 @@ module z_stepper_mount () {
       z_belt_side() == 1 ? nema17_chamfer : 0,
     ]);
 
-    translate([0, 0, stepper_bolt_l + stepper_mount_plate_t]) {
+    extrusion_side_bolt_inset = stepper_mount_plate_t - v_slot_wall_t;
+    translate([ 0, 0, stepper_bolt_l + stepper_mount_plate_t ]) {
       nema17_mounts() {
         bolt(bolt, length = z_stepper_bolt_l);
-        bolt(bolt, length = z_stepper_bolt_l);
-        union () {
-          if (z_belt_side() == -1) 
+        translate([ 0, 0, -extrusion_side_bolt_inset ]) bolt(
+          bolt, kind = "countersunk", length = z_stepper_bolt_l,
+          head_top_clearance = extrusion_side_bolt_inset
+        );
+        union() {
+          if (z_belt_side() == -1)
             bolt(bolt, length = z_stepper_bolt_l);
         };
         union () {
