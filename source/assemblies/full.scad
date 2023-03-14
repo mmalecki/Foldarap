@@ -23,7 +23,7 @@ use <z-axis-left.scad>;
 use <z-axis-right.scad>;
 use <z-axis.scad>;
 
-module full_assembly(e = 0, frame = true, x_axis = true) {
+module full_assembly (e = 0, frame = true, x_axis = true) {
   rotate([ z_axis_x_rotation, 0 ]) {
     // The right Z axis (when looking from the front).
     translate([ -x_v_slot_l / 2 - z_x_frame_offset - v_slot_d / 2, 0 ]) {
@@ -43,8 +43,10 @@ module full_assembly(e = 0, frame = true, x_axis = true) {
       ]) x_axis_assembly();
     }
 
-    translate([ -x_v_slot_l / 2, 0, z_v_slot_l - frame_v_slot_z_spacing / 2 + v_slot_d / 2 ]
-    ) rotate([ 0, 90, 0 ]) v_slot_mockup(x_v_slot_l);
+    translate([
+      -x_v_slot_l / 2, 0, z_v_slot_l - frame_v_slot_z_spacing / 2 + v_slot_d / 2 -
+      v_slot_d
+    ]) rotate([ 0, 90, 0 ]) v_slot_mockup(x_v_slot_l);
   }
 
   if (frame) {
