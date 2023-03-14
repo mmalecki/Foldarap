@@ -26,25 +26,25 @@ use <z-axis.scad>;
 module full_assembly (e = 0, frame = true, x_axis = true) {
   rotate([ z_axis_x_rotation, 0 ]) {
     // The right Z axis (when looking from the front).
-    translate([ -x_v_slot_l / 2 - z_x_frame_offset - v_slot_d / 2, 0 ]) {
+    translate([ -x_v_slot_l / 2 - frame_z_x_offset - v_slot_d / 2, 0 ]) {
       z_axis_right_assembly(e, z);
     }
 
     // The left gantry (when looking from the front).
     // Carries the extruder at the moment.
-    translate([ x_v_slot_l / 2 + z_x_frame_offset + v_slot_d / 2, 0 ]) {
+    translate([ x_v_slot_l / 2 + frame_z_x_offset + v_slot_d / 2, 0 ]) {
       z_axis_left_assembly(e, z);
     }
 
     if (x_axis) {
       translate([
         -x_v_slot_l / 2, 0,
-        frame_v_slot_z_spacing / 2 + z_axis_x_v_slot_bottom_offset() + z + v_slot_d / 2
+        frame_y_z_offset / 2 + z_axis_x_v_slot_bottom_offset() + z + v_slot_d / 2
       ]) x_axis_assembly();
     }
 
     translate([
-      -x_v_slot_l / 2, 0, z_v_slot_l - frame_v_slot_z_spacing / 2 + v_slot_d / 2 -
+      -x_v_slot_l / 2, 0, z_v_slot_l - frame_y_z_offset / 2 + v_slot_d / 2 -
       v_slot_d
     ]) rotate([ 0, 90, 0 ]) v_slot_mockup(x_v_slot_l);
   }

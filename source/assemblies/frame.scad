@@ -13,9 +13,9 @@ module frame_square_assembly(e = 0) {
 }
 
 module frame_assembly(e = 0) {
-  translate([ -x_v_slot_l / 2, y_v_slot_l - z_y_frame_offset, -frame_v_slot_z_spacing / 2 ]
+  translate([ -x_v_slot_l / 2, y_v_slot_l - frame_z_y_offset, -frame_y_z_offset / 2 ]
   ) {
     translate([ 0, 0, v_slot_d / 2 ]) frame_square_assembly();
-    translate([ 0, 0, frame_v_slot_z_spacing - v_slot_d / 2 ]) frame_square_assembly();
+    translate([ 0, 0, frame_y_z_offset - v_slot_d / 2 ]) frame_square_assembly();
   }
 }

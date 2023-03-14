@@ -66,7 +66,7 @@ module top_corner_to_stepper_mount () {
 // Top corner, `mirror([0, 1, 0])` to get the other one.
 // Part is centered around the top of the Z extrusion.
 module top_corner () {
-  w = v_slot_wall_t + v_slot_d + z_x_frame_offset + top_hold_w;
+  w = v_slot_wall_t + v_slot_d + frame_z_x_offset + top_hold_w;
   h = top_corner_h();
   l = v_slot_d + 2 * v_slot_wall_t;
   stepper_x_offset = top_corner_stepper_x_offset();
@@ -91,7 +91,7 @@ module top_corner () {
 
     side_bolt_pair();
 
-    translate([v_slot_d / 2 + z_x_frame_offset, 0]) {
+    translate([v_slot_d / 2 + frame_z_x_offset, 0]) {
       translate([0, 0, v_slot_d / 2]) rotate([0, 90, 0])
         v_slot_clearance(h = x_v_slot_l);
 

@@ -11,7 +11,7 @@ kipp0334_210_flange_l = 2.5;
 kipp0334_210_flange_d = 12;
 kipp0334_210_relaxed_d = 7.5;
 
-h = frame_v_slot_z_spacing;
+h = frame_y_z_offset;
 // I like the "X" shape, let's keep it. No chamfer though, sorry.
 separator = 2;
 // Increase the separator width a little to allow for more material around the
@@ -90,7 +90,7 @@ module outer_hinge () {
         }
       }
 
-      translate([z_x_frame_offset + v_slot_d / 2, 0, -h / 2]) {
+      translate([frame_z_x_offset + v_slot_d / 2, 0, -h / 2]) {
         linear_extrude (h) {
           square([v_slot_mount_d, v_slot_mount_d], center = true);
         }
@@ -99,7 +99,7 @@ module outer_hinge () {
 
     // Make some space for a metal washer here:
     rotate([0, 90, 0])
-      bolt(frame_bolt, length = z_x_frame_offset, kind = "socket_head", head_diameter_clearance = 2, countersink = 1);
+      bolt(frame_bolt, length = frame_z_x_offset, kind = "socket_head", head_diameter_clearance = 2, countersink = 1);
 
     for (spot = [-1, 1]) {
       translate([0, spot * (v_slot_mount_d / 2 + (separator_w - v_slot_mount_d) / 4)])
@@ -108,12 +108,12 @@ module outer_hinge () {
     }
 
     // The bolt access hole:
-    translate([z_x_frame_offset + v_slot_d, 0]) {
+    translate([frame_z_x_offset + v_slot_d, 0]) {
       rotate([0, 90, 0])
         cylinder(d = 10, h = v_slot_wall_t);
     }
 
-    translate([z_x_frame_offset + v_slot_d / 2, 0]) {
+    translate([frame_z_x_offset + v_slot_d / 2, 0]) {
       translate([0, v_slot_d / 2])
         rotate([0, 90, 90])
           bolt(frame_bolt, length = v_slot_wall_t);
@@ -124,11 +124,11 @@ module outer_hinge () {
     }
 
 
-    translate([z_x_frame_offset + v_slot_d / 2, 0, -h / 2])
+    translate([frame_z_x_offset + v_slot_d / 2, 0, -h / 2])
       v_slot_clearance(z_v_slot_l);
 
     translate([
-      z_x_frame_offset - v_slot_wall_t - loose_fit / 2,
+      frame_z_x_offset - v_slot_wall_t - loose_fit / 2,
       -w / 2,
       h / 2 - z_idler_clearance
     ])

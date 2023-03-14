@@ -80,12 +80,12 @@ module z_gantry_common () {
   // The part that holds the X axis:
   difference () {
     v_slot_hold_offset = h - v_slot_d - v_slot_wall_t;
-    x_hold_offset = v_slot_d / 2 + z_x_frame_offset - x_fit;
+    x_hold_offset = v_slot_d / 2 + frame_z_x_offset - x_fit;
 
     union () {
       // We could also extrude this in the next part, but it's cleaner that way:
       translate([v_slot_d / 2, -slider_d / 2, v_slot_hold_offset]) {
-        cube([z_x_frame_offset, slider_d, v_slot_d + v_slot_wall_t]);
+        cube([frame_z_x_offset, slider_d, v_slot_d + v_slot_wall_t]);
       }
 
       translate([x_hold_offset, slider_d / 2, 0]) {

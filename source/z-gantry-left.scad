@@ -16,7 +16,7 @@ module z_gantry_left() {
   h = z_gantry_h();
 
   translate([
-    v_slot_d / 2 + z_x_frame_offset - z_gantry_x_fit() - endstop_holder_h() +
+    v_slot_d / 2 + frame_z_x_offset - z_gantry_x_fit() - endstop_holder_h() +
       frame_bolt_wall_d,
     v_slot_d / 2 + v_slot_wall_t + endstop_holder_w() / 2 - endstop_wall_t,
     h - endstop_holder_l() / 2

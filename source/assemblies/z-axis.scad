@@ -20,14 +20,14 @@ function z_axis_belt_x_offset () =
   // Starting from the bed:
   (x_v_slot_s() - bed_w) / 2 +      // end of bed to inner edge of Y extrusion
   v_slot_d +                        // Y extrusion
-  z_x_frame_offset + v_slot_d / 2;  // middle of belt
+  frame_z_x_offset + v_slot_d / 2;  // middle of belt
 
 // A Z axis assembly. Accepts the gantry as a child.
 module z_axis_assembly (e = 0, z = 0) {
-  translate([ 0, 0, -frame_v_slot_z_spacing / 2 ]) {
+  translate([ 0, 0, -frame_y_z_offset / 2 ]) {
     v_slot_mockup(z_v_slot_l);
 
-    rail_offset = frame_v_slot_z_spacing + z_idler_h();
+    rail_offset = frame_y_z_offset + z_idler_h();
     translate([ 0, -v_slot_d / 2, rail_offset ]) rotate([ 0, 0, 180 ])
       mgn12_mockup(z_v_slot_l - rail_offset - v_slot_d);
 
@@ -36,17 +36,17 @@ module z_axis_assembly (e = 0, z = 0) {
     }
   }
 
-  mirror([ 1, 0, 0 ]) translate([ -z_x_frame_offset - v_slot_d / 2, 0, 0 ]) outer_hinge();
+  mirror([ 1, 0, 0 ]) translate([ -frame_z_x_offset - v_slot_d / 2, 0, 0 ]) outer_hinge();
 
-  translate([ 0, 0, frame_v_slot_z_spacing / 2 - outer_hinge_z_idler_clearance() + e ]) {
+  translate([ 0, 0, frame_y_z_offset / 2 - outer_hinge_z_idler_clearance() + e ]) {
     z_idler();
 
-    to_z_belt_y_center() gt2_belt_mockup(z_v_slot_l - frame_v_slot_z_spacing);
+    to_z_belt_y_center() gt2_belt_mockup(z_v_slot_l - frame_y_z_offset);
   }
 
   echo(str(
     "z-axis travel distance available: ",
-    z_v_slot_l - frame_v_slot_z_spacing - top_corner_h() - z_idler_h()
+    z_v_slot_l - frame_y_z_offset - top_corner_h() - z_idler_h()
   ));
   echo(str("z-axis belt x offset (for M671): ", z_axis_belt_x_offset()));
 }
