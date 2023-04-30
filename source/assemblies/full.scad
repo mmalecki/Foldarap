@@ -30,8 +30,7 @@ module full_assembly (e = 0, frame = true, x_axis = true) {
       z_axis_right_assembly(e, z);
     }
 
-    // The left gantry (when looking from the front).
-    // Carries the extruder at the moment.
+    // The left Z axis.
     translate([ x_v_slot_l / 2 + frame_z_x_offset + v_slot_d / 2, 0 ]) {
       z_axis_left_assembly(e, z);
     }
@@ -43,10 +42,9 @@ module full_assembly (e = 0, frame = true, x_axis = true) {
       ]) x_axis_assembly();
     }
 
-    translate([
-      -x_v_slot_l / 2, 0, z_v_slot_l - frame_y_z_offset / 2 + v_slot_d / 2 -
-      v_slot_d
-    ]) rotate([ 0, 90, 0 ]) v_slot_mockup(x_v_slot_l);
+    translate(
+      [ -x_v_slot_l / 2, 0, z_v_slot_l - frame_y_z_offset / 2 + v_slot_d / 2 - v_slot_d ]
+    ) rotate([ 0, 90, 0 ]) v_slot_mockup(x_v_slot_l);
   }
 
   if (frame) {
