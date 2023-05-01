@@ -1,12 +1,16 @@
 include <mgn12-parameters.scad>;
 use <../catchnhole/catchnhole.scad>;
 
+module mgn12c_mockup () {
+  color("silver") mgn12c();
+}
+
 module mgn12c () {
-  translate([ -mgn12c_w / 2, -mgn12c_l / 2 ]) {
-    difference() {
+  difference() {
+    translate([ -mgn12c_w / 2, -mgn12c_l / 2 ]) {
       cube([ mgn12c_w, mgn12c_l, mgn12c_h ]);
-      mgn12c_bolts(mgn12c_h);
     }
+    mgn12c_bolts(mgn12c_h);
   }
 }
 
