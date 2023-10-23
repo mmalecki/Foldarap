@@ -1,2 +1,11 @@
 *.stl
 *.3mf
+# Ignore common 3D output file formats
+*.3mf
+*.stl
+*.step
+*.png
+
+venv/
+__pycache__
+dist/
