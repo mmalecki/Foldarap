@@ -8,6 +8,7 @@ frameTopLeft = vslot(Settings.yL)
 frameTopRight = vslot(Settings.yL)
 
 yAxisMountFront = joiningPlate2()
+yAxisMountBack = joiningPlate2()
 
 yAxisProfile = vslot(Settings.yL + 2 * vslot.d)
 
@@ -20,6 +21,7 @@ assembly = (
 
         .add(yAxisProfile, name="yAxisProfile")
         .add(yAxisMountFront, name="yAxisMountFront")
+        .add(yAxisMountBack, name="yAxisMountBack")
 
         .constrain("frameTopFront", frameTopFront.faces(">Z").edges(">Y").val(), "frameTopLeft", frameTopLeft.faces(">Z").edges(">Y").val(), "Point")
         .constrain("frameTopFront", frameTopFront.faces("<Z").edges(">Y").val(), "frameTopRight", frameTopRight.faces(">Z").edges("<Y").val(), "Point")
@@ -27,14 +29,18 @@ assembly = (
         .constrain("frameTopFront@faces@>Y", "frameTopRight@faces@>Z", "Axis")
 
         .constrain("frameTopBack", frameTopBack.faces(">Z").edges("<Y").val(), "frameTopLeft", frameTopLeft.faces("<Z").edges(">Y").val(), "Point")
-        .constrain("frameTopBack", frameTopBack.faces("<Z").edges("<Y").val(), "frameTopRight", frameTopRight.faces("<Z").edges("<Y").val(), "Point")
         .constrain("frameTopBack@faces@>Y", "frameTopLeft@faces@>Z", "Axis")
-        .constrain("frameTopBack@faces@>Y", "frameTopRight@faces@>Z", "Axis")
 
+        .constrain("yAxisProfile@faces@>Y", "frameTopFront@faces@<X", "Axis")
+
+        # TODO: hand-wavy
         .constrain("frameTopFront", frameTopFront.faces("<Y").edges(">X").val(), "yAxisMountFront", yAxisMountFront.faces(">Y").edges(">X").val(), "Axis")
         .constrain("frameTopFront", frameTopFront.faces("<Y").val(), "yAxisMountFront", yAxisMountFront.edges("%Circle").all()[1].val(), "Plane")
         .constrain("yAxisProfile", yAxisProfile.faces(">Z").val(), "yAxisMountFront", yAxisMountFront.edges("%Circle").all()[3].val(), "Plane")
-        .constrain("yAxisProfile@faces@>Y", "frameTopFront@faces@<X", "Axis")
+
+        # TODO: this one works very well, but somehow doesn't translate cleanly to ^
+        .constrain("frameTopBack", frameTopBack.faces(">Y").edges(">X").val(), "yAxisMountBack", yAxisMountBack.faces(tag="mate1").edges(">X").val(), "Plane")
+        .constrain("yAxisProfile", yAxisProfile.faces("<Z").edges("<Y").val(), "yAxisMountBack", yAxisMountBack.faces(tag="mate1").edges("<X").val(), "Point")
 )
 
 
