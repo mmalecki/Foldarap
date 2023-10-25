@@ -18,5 +18,5 @@ def joiningPlate2():
     return plate
 
 if 'show_object' in globals():
-    # show_object(vslot(100), name="vslot100")
-    show_object(joiningPlate2().translate((5, 0, 0)), name="joiningPlate2")
+    show_object(vslot(100), name="vslot100")
+    show_object(joiningPlate2().translate((VSLOT_D * 2, 0, 0)), name="joiningPlate2")
