@@ -6,6 +6,8 @@
 *.step
 *.png
 
+!cad/vitamins/*.step
+
 venv/
 __pycache__
 dist/
