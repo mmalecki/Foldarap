@@ -17,7 +17,6 @@ def mgn12(length):
 
 def mgn12c():
     c = RAIL_MODELS["MGN12"]["C"]
-    # debug(c.faces("<X"))
     c.faces(">Z[4]").tag("mate").end()
     return c
 
