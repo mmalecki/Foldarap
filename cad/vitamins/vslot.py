@@ -12,8 +12,8 @@ vslot.d = VSLOT_D
 
 def joiningPlate2():
     plate = cq.importers.importStep(os.path.join(os.path.dirname(__file__), "Joining Strip Plate 2 Hole.step"))
-    plate.faces(">Y").tag("mate0")
-    plate.faces("<Y").tag("mate1")
+    plate.faces(">Y").tag("mate0").end()
+    plate.faces("<Y").tag("mate1").end()
     # debug(plate.faces(tag="mate0").edges(">X"))
     return plate
 
