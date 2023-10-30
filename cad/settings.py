@@ -1,4 +1,5 @@
 import cq_queryabolt
+from vitamins.vslot import vslot
 
 class Settings:
     tightFit = 0.1
@@ -16,7 +17,10 @@ class Settings:
     sacrificialLayers = 0.2
 
     yL = 300
-    xL = 200
 
-    bedY = 150
-    bedX = 140
+    bedXFrameClearance = 5
+    bedY = 140
+    bedX = 150
+    bedT = 4
+
+    xL = bedX + 2 * vslot.d + 2 * bedXFrameClearance
