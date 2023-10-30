@@ -2,6 +2,7 @@ import cadquery as cq
 from vitamins.vslot import vslot, joiningPlate2
 from vitamins.mgn import mgn12, mgn12c
 from settings import Settings
+from y_carriage import yCarriage
 
 frameTopFront = vslot(Settings.xL)
 frameTopBack = vslot(Settings.xL)
@@ -13,7 +14,9 @@ yAxisMountBack = joiningPlate2()
 
 yAxisProfile = vslot(Settings.yL + 2 * vslot.d)
 yAxisRail = mgn12(Settings.yL)
-yAxisCarriage = mgn12c()
+yAxisRailCarriage = mgn12c()
+
+yCarriage_ = yCarriage()
 
 assembly = (
     cq.Assembly()
@@ -26,7 +29,9 @@ assembly = (
         .add(yAxisMountFront, name="yAxisMountFront")
         .add(yAxisMountBack, name="yAxisMountBack")
         .add(yAxisRail, name="yAxisRail")
-        .add(yAxisCarriage, name="yAxisCarriage")
+        .add(yAxisRailCarriage, name="yAxisRailCarriage")
+
+        .add(yCarriage_, name="yCarriage")
 
         .constrain("frameTopFront", frameTopFront.faces(">Z").edges(">Y").val(), "frameTopLeft", frameTopLeft.faces(">Z").edges(">Y").val(), "Point")
         .constrain("frameTopFront", frameTopFront.faces("<Z").edges(">Y").val(), "frameTopRight", frameTopRight.faces(">Z").edges("<Y").val(), "Point")
@@ -50,8 +55,12 @@ assembly = (
         .constrain("yAxisRail@faces@<Z", "yAxisProfile@faces@>Y", "Plane")
         .constrain("yAxisRail@faces@<Y", "yAxisProfile@faces@>Z", "Axis")
 
-        .constrain("yAxisRail@faces@>Z", "yAxisCarriage?mate", "Plane")
-        .constrain("yAxisCarriage@faces@>X", "yAxisProfile@faces@>X", "Axis")
+        .constrain("yAxisRail@faces@>Z", "yAxisRailCarriage?mateRail", "Plane")
+        .constrain("yAxisRailCarriage@faces@>X", "yAxisProfile@faces@>X", "Axis")
+
+        .constrain("yCarriage@faces@>X", "yAxisProfile@faces@>X", "Axis")
+        .constrain("yCarriage@faces@>Z", "yAxisRailCarriage@faces@>Z", "Axis")
+        .constrain("yCarriage?railCarriageMount", "yAxisRailCarriage?mateLoad", "Point")
 )
 
 
