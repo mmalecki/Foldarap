@@ -11,7 +11,14 @@ def yCarriage():
     carriage = carriage.rect(bedMount.x + Settings.boltWallD, bedMount.y + Settings.boltWallD).extrude(t)
     carriage.faces(">Z").workplane().tag("top")
     carriage.faces("<Z").tag("bottom")
-    carriage = bedMount(carriage.workplaneFromTagged("top"), "bedMount").boltHole(Settings.bolt)
+
+    carriage = bedMount(carriage.workplaneFromTagged("top")).boltHole(Settings.bolt)
+
+    i = 0
+    for mp in carriage.faces("<Z").edges("%Circle").all():
+        mp.tag(f"bedMount{i}")
+        i = i + 1
+
     carriage = mgn12cMount(carriage.workplaneFromTagged("top"), "railCarriageMount").boltHole(Settings.bolt)
     return carriage
 

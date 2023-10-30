@@ -3,6 +3,7 @@ from vitamins.vslot import vslot, joiningPlate2
 from vitamins.mgn import mgn12, mgn12c
 from settings import Settings
 from y_carriage import yCarriage
+from bed import bed, bedStandoff
 
 frameTopFront = vslot(Settings.xL)
 frameTopBack = vslot(Settings.xL)
@@ -17,6 +18,9 @@ yAxisRail = mgn12(Settings.yL)
 yAxisRailCarriage = mgn12c()
 
 yCarriage_ = yCarriage()
+bed = bed()
+
+y = 0
 
 assembly = (
     cq.Assembly()
@@ -29,9 +33,15 @@ assembly = (
         .add(yAxisMountFront, name="yAxisMountFront")
         .add(yAxisMountBack, name="yAxisMountBack")
         .add(yAxisRail, name="yAxisRail")
-        .add(yAxisRailCarriage, name="yAxisRailCarriage")
 
-        .add(yCarriage_, name="yCarriage")
+        # Don't ask me why this works:
+        .add(yAxisRailCarriage.translate((0, -y, 0)), name="yAxisRailCarriage")
+        .add(yCarriage_.translate((0, y, 0)), name="yCarriage")
+
+        .add(bedStandoff(), name="bedStandoff0")
+        .add(bedStandoff(), name="bedStandoff1")
+        .add(bedStandoff(), name="bedStandoff2")
+        .add(bed.translate((0, -y, 0)), name="bed")
 
         .constrain("frameTopFront", frameTopFront.faces(">Z").edges(">Y").val(), "frameTopLeft", frameTopLeft.faces(">Z").edges(">Y").val(), "Point")
         .constrain("frameTopFront", frameTopFront.faces("<Z").edges(">Y").val(), "frameTopRight", frameTopRight.faces(">Z").edges("<Y").val(), "Point")
@@ -61,6 +71,14 @@ assembly = (
         .constrain("yCarriage@faces@>X", "yAxisProfile@faces@>X", "Axis")
         .constrain("yCarriage@faces@>Z", "yAxisRailCarriage@faces@>Z", "Axis")
         .constrain("yCarriage?railCarriageMount", "yAxisRailCarriage?mateLoad", "Point")
+
+        .constrain("bed?mount0", "bedStandoff1@faces@>Z", "Plane")
+        .constrain("bed?mount1", "bedStandoff0@faces@>Z", "Plane")
+        .constrain("bed?mount2", "bedStandoff2@faces@>Z", "Plane")
+
+        .constrain("bedStandoff0@faces@<Z", "yCarriage?bedMount0", "Plane")
+        .constrain("bedStandoff1@faces@<Z", "yCarriage?bedMount1", "Plane")
+        .constrain("bedStandoff2@faces@<Z", "yCarriage?bedMount2", "Point")
 )
 
 
