@@ -14,6 +14,12 @@ class Settings:
     cboreBoltWallD = cq_queryabolt.boltData(bolt, kind="socket_head")['head_diameter'] + minBoltWallD
     nutH = cq_queryabolt.nutData(bolt)['thickness']
 
+    frameBolt = "M4"
+    frameBoltD = cq_queryabolt.boltData(frameBolt)['diameter']
+    frameBoltWallD = frameBoltD + minBoltWallD
+
+    stepperPlateT = 5
+
     sacrificialLayers = 0.2
 
     yL = 300
