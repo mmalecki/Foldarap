@@ -64,12 +64,10 @@ assembly = (
 
         .constrain("yAxisProfile@faces@>Y", "frameTopFront@faces@<X", "Axis")
 
-        # TODO: hand-wavy
-        .constrain("frameTopFront", frameTopFront.faces("<Y").edges(">X").val(), "yAxisMountFront", yAxisMountFront.faces(">Y").edges(">X").val(), "Axis")
-        .constrain("frameTopFront", frameTopFront.faces("<Y").val(), "yAxisMountFront", yAxisMountFront.edges("%Circle").all()[1].val(), "Plane")
-        .constrain("yAxisProfile", yAxisProfile.faces(">Z").val(), "yAxisMountFront", yAxisMountFront.edges("%Circle").all()[3].val(), "Plane")
+        .constrain("frameTopFront", frameTopFront.faces("<Y").edges(">X").val(), "yAxisMountFront", yAxisMountFront.faces(tag="mate0").edges(">X").val(), "Plane")
+        .constrain("yAxisProfile", yAxisProfile.faces(">Z").edges("<Y").val(), "yAxisMountFront", yAxisMountFront.faces(tag="mate0").edges("<X").val(), "Point")
+        .constrain("yAxisProfile", yAxisProfile.faces(">Z").edges(">Y").val(), "frameTopFront", frameTopFront.faces("<Y").edges("<X").val(), "Point")
 
-        # TODO: this one works very well, but somehow doesn't translate cleanly to ^
         .constrain("frameTopBack", frameTopBack.faces(">Y").edges(">X").val(), "yAxisMountBack", yAxisMountBack.faces(tag="mate1").edges(">X").val(), "Plane")
         .constrain("yAxisProfile", yAxisProfile.faces("<Z").edges("<Y").val(), "yAxisMountBack", yAxisMountBack.faces(tag="mate1").edges("<X").val(), "Point")
 
