@@ -1,6 +1,6 @@
 from cadquery import Workplane
 
-D = 42.3
+NEMA17_D = 42.3
 MOUNT_D = 31
 ID = 22.5
 BOLT_D = 3
@@ -11,8 +11,8 @@ def nema17Mount(plane, tag = None):
         mount.tag(tag)
     return mount
 
-def nema17Mock (h = D):
-    mock = Workplane("front").rect(D, D).extrude(h)
+def nema17Mock (h = NEMA17_D):
+    mock = Workplane("front").rect(NEMA17_D, NEMA17_D).extrude(h)
 
     mock = nema17Mount(mock.faces(">Z").workplane(), "mountPoints").hole(BOLT_D, depth=5)
     mock = mock.edges("|Z").chamfer(3)

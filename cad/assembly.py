@@ -1,11 +1,23 @@
 import cadquery as cq
-from vitamins.vslot import vslot, joiningPlate2
-from vitamins.mgn import mgn12, mgn12c
+
 from settings import Settings
+
+from vitamins.vslot import vslot, joiningPlate2, VSLOT_D
+from vitamins.nema17 import nema17Mock, NEMA17_D
+from vitamins.mgn import mgn12, mgn12c
+
 from y_carriage import yCarriage
-from bed import bed, bedStandoff
+from y_idler import yIdler
 from y_stepper_mount import yStepperMount
-from vitamins.nema17 import nema17Mock
+
+from bed import bed, bedStandoff
+
+STEEL = cq.Color(113 / 255, 121 / 255, 126 / 255, 1)
+ALU = cq.Color(132 / 255, 135 / 255, 137 / 255, 1)
+A_ALU = cq.Color(132 / 255, 135 / 255, 137 / 255, 0.5)
+
+MAIN = cq.Color(1, 0, 0, 1)
+ACCENT = cq.Color(0, 1, 0, 1)
 
 frameTopFront = vslot(Settings.xL)
 frameTopBack = vslot(Settings.xL)
@@ -25,29 +37,34 @@ bed = bed()
 
 yStepperMount_ = yStepperMount()
 yStepper = nema17Mock()
+yIdler = yIdler()
 
 y = 0
 
 def toStepperMount(item, dir = 1):
     return item.translate((0, dir * ((Settings.yL - yStepperMount.w) / 2 + Settings.frameBoltWallD), 0))
 
+def toYIdlerMount(item, dir = 1):
+    return item.translate((0, dir * (-NEMA17_D / 2 - VSLOT_D / 2- Settings.stepperPlateT), 0))
+
 assembly = (
     cq.Assembly()
-        .add(frameTopFront, name="frameTopFront")
-        .add(frameTopLeft, name="frameTopLeft")
-        .add(frameTopRight, name="frameTopRight")
-        .add(frameTopBack, name="frameTopBack")
+        .add(frameTopFront, name="frameTopFront", color=ALU)
+        .add(frameTopLeft, name="frameTopLeft", color=ALU)
+        .add(frameTopRight, name="frameTopRight", color=A_ALU)
+        .add(frameTopBack, name="frameTopBack", color=ALU)
 
-        .add(yAxisProfile, name="yAxisProfile")
-        .add(yAxisMountFront, name="yAxisMountFront")
-        .add(yAxisMountBack, name="yAxisMountBack")
-        .add(yAxisRail, name="yAxisRail")
-        .add(toStepperMount(yStepperMount_), name="yStepperMount")
+        .add(yAxisProfile, name="yAxisProfile", color=ALU)
+        .add(yAxisMountFront, name="yAxisMountFront", color=ALU)
+        .add(yAxisMountBack, name="yAxisMountBack", color=ALU)
+        .add(yAxisRail, name="yAxisRail", color=STEEL)
+        .add(toStepperMount(yStepperMount_), name="yStepperMount", color=MAIN)
+        .add(toYIdlerMount(yIdler), name="yIdler", color=MAIN)
         .add(toStepperMount(yStepper), name="yStepper")
 
         # Don't ask me why this works:
-        .add(yAxisRailCarriage.translate((0, -y, 0)), name="yAxisRailCarriage")
-        .add(yCarriage_.translate((0, y, 0)), name="yCarriage")
+        .add(yAxisRailCarriage.translate((0, -y, 0)), name="yAxisRailCarriage", color=STEEL)
+        .add(yCarriage_.translate((0, y, 0)), name="yCarriage", color=MAIN)
 
         .add(bedStandoff(), name="bedStandoff0")
         .add(bedStandoff(), name="bedStandoff1")
@@ -88,6 +105,8 @@ assembly = (
         .constrain("yStepper", yStepper.edges(">X").edges(">Z").val(), "yStepperMount", yStepperMount_.faces(">Z[1]").edges(">>X[2]").val(), "Plane")
         # .constrain("yStepper@faces@>Z", "yStepperMount?mateStepper", "Plane")
         # .constrain("yStepper@edges@>X", "yStepperMount?mateStepper", "Point")
+
+        .constrain("yIdler?back", "frameTopBack@faces@<Y", "Plane")
 
         .constrain("bed?mount0", "bedStandoff1@faces@>Z", "Plane")
         .constrain("bed?mount1", "bedStandoff0@faces@>Z", "Plane")
